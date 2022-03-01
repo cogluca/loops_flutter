@@ -57,7 +57,8 @@ class LoginScreen extends GetView<LoginController> {
                   ElevatedButton(
                     child: const Text('Login with Google',
                         style: TextStyle(fontSize: 20)),
-                    onPressed: loginController.signInWithGoogle,
+                    onPressed: ()=> {
+                      loginController.signInWithGoogle},
                   ),
                 ])))));
   }
