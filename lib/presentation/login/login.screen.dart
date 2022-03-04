@@ -1,6 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:loops/infrastructure/navigation/navigation.dart';
+import 'package:loops/model.dart';
+import 'package:loops/presentation/home/home.screen.dart';
 
 import 'controllers/login.controller.dart';
 
@@ -47,9 +53,9 @@ class LoginScreen extends GetView<LoginController> {
 
                       )),
                   ElevatedButton(
-                      onPressed: (){
-                        //TODO: Implement Login with mail
-                      }, //this should pop out either a modal box or switch elements into th screen to two text input fields
+                    onPressed: () => {loginController.signInWithEmail().then((value) =>
+                    Get.find<GetStorage>().read('user') != null ? Get.toNamed('/home') : const SnackBar(content: Text('Sorry invalid login'), duration: Duration(seconds: 5),)),}
+                      ,
                       child: const Text(
                         'Login with Email',
                         style: TextStyle(fontSize: 20),
@@ -58,7 +64,9 @@ class LoginScreen extends GetView<LoginController> {
                     child: const Text('Login with Google',
                         style: TextStyle(fontSize: 20)),
                     onPressed: ()=> {
-                      loginController.signInWithGoogle},
+                      loginController.signInWithGoogle().then((value) =>
+                      Get.find<GetStorage>().read('user') != null ? Get.toNamed('/home') : const SnackBar(content: Text('Sorry invalid login'), duration: Duration(seconds: 5),)),}
+
                   ),
                 ])))));
   }

@@ -6,7 +6,6 @@ class LoginRepository {
   
   final FirebaseFirestore authApi = FirebaseFirestore.instance;
 
-  //TODO Might have to wrap instances all together in a service module to be retrieved as single istances, otherwise I have my whole app with multiple instances being called around
   Future<UserCredential> verifyUser (
       {required String email, required String password}) async{
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -31,7 +30,6 @@ class LoginRepository {
     UserCredential signedInUser = await FirebaseAuth.instance.signInWithCredential(credential);
 
     return signedInUser;
-
 
   }
 }
