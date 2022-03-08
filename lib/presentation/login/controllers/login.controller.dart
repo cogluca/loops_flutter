@@ -46,18 +46,39 @@ class LoginController extends GetxController {
 
   Future<AppUser> signInWithEmail() async{
     UserCredential userCredential = await loginRepository.verifyUser(email: emailController.text, password: passwordController.text);
-    AppUser loggedInUser = AppUser(user: userCredential.user.toString(), credential: userCredential.credential.toString());
+
+    String? usernm = userCredential.user?.displayName;
+    String? email = userCredential.user?.email;
+    String? imgNetworkUrl = userCredential.user?.photoURL;
+
+    AppUser loggedInUser = AppUser(usernm ,email, userCredential.credential.toString(), imgNetworkUrl);
     storage.write("user", loggedInUser.toMap());
     return loggedInUser;
   }
+
+  
 
   Future<AppUser> signInWithGoogle() async {
 
     UserCredential userCredential = await loginRepository.signInWithGoogle();
-    AppUser loggedInUser = AppUser(user: userCredential.user.toString(), credential: userCredential.credential.toString());
+
+    String? usernm = userCredential.user?.displayName;
+    String? email = userCredential.user?.email;
+    String? imgNetworkUrl = userCredential.user?.photoURL;
+
+    print(imgNetworkUrl);
+
+    print(usernm);
+    AppUser loggedInUser = AppUser(usernm ,email, userCredential.credential.toString(), imgNetworkUrl);
+
     storage.write("user", loggedInUser.toMap());
     return loggedInUser;
+
+
+
   }
+
+
 
 
 }
