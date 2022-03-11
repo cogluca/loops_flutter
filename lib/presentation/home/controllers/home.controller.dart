@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:loops/repository/login_repository.dart';
+import 'package:loops/presentation/home/repository/home_repository.dart';
+import 'package:loops/presentation/login/repository/login_repository.dart';
+import 'package:loops/models/Project.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
@@ -8,7 +10,19 @@ class HomeController extends GetxController {
   RxString emailOnScreen = ''.obs;
   RxString imageUrl = ''.obs;
 
+  List<Project> listOfPresentProjects = <Project> [];
+
   LoginRepository loginRepository = LoginRepository();
+  HomeRepository homeRepository = HomeRepository();
+
+  GetStorage getStorage = Get.find<GetStorage>();
+  int _currentProjectId = 0;
+
+  int get currentProjectId => _currentProjectId;
+
+  set currentProjectId(int value) {
+    _currentProjectId = value;
+  }
 
   @override
   void onInit() {
@@ -16,6 +30,7 @@ class HomeController extends GetxController {
     userNameSetter();
     eMailSetter();
     imageUrlSetter();
+    getProjects();
   }
 
   @override
@@ -56,5 +71,26 @@ class HomeController extends GetxController {
     Get.find<GetStorage>().erase();
   }
 
+  Future<List<Project>> getProjects() async {
+
+    listOfPresentProjects = await homeRepository.getProjects();
+
+    List<Project> projectsList = await homeRepository.getProjects();
+
+    return projectsList;
+
+    //repository call to fetch the projects
+  }
+
+  void writeAndSetProjectIdOnStorage(int id) {
+    getStorage.write('choosenProject', id);
+    currentProjectId = id;
+  }
+
+
+  void navigateToBacklog(int id) {
+    writeAndSetProjectIdOnStorage(id);
+    Get.toNamed('/backlog');
+  }
 
 }

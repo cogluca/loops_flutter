@@ -7,5 +7,5 @@ class Routes {
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const PROJECTS = '/projects';
-
+  static const BACKLOG = '/backlog';
 }

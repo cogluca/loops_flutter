@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+
 import '../../presentation/screens.dart';
 import 'bindings/controllers/controllers_bindings.dart';
 import 'routes.dart';
-
 
 class Nav {
   static List<GetPage> routes = [
@@ -18,6 +18,11 @@ class Nav {
       name: Routes.HOME,
       page: () => HomeScreen(),
       binding: HomeControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.BACKLOG,
+      page: () => BacklogScreen(),
+      binding: BacklogControllerBinding(),
     ),
   ];
 }
