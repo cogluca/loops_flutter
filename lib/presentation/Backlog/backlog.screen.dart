@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loops/presentation/Backlog/TaskTile.dart';
 
+import '../../models/Task.dart';
 import '../home/controllers/home.controller.dart';
 import 'controllers/backlog.controller.dart';
 
 class BacklogScreen extends GetView<BacklogController> {
-
-  BacklogController backlogController = Get.put(BacklogController());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,8 +15,10 @@ class BacklogScreen extends GetView<BacklogController> {
         title: const Text('Backlog'),
         centerTitle: true,
         actions: <Widget>[
-          IconButton(onPressed: () => {}, icon: const Icon(Icons.notifications)),
-          IconButton(onPressed: () => {}, icon: const Icon(Icons.more_vert_outlined)),
+          IconButton(
+              onPressed: () => {}, icon: const Icon(Icons.notifications)),
+          IconButton(
+              onPressed: () => {}, icon: const Icon(Icons.more_vert_outlined)),
         ],
       ),
       drawer: Drawer(
@@ -33,29 +33,39 @@ class BacklogScreen extends GetView<BacklogController> {
                 decoration: const BoxDecoration(
                   color: Colors.blue,
                 ),
-                child: Obx(() => Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundImage:
-                        NetworkImage(Get.find<HomeController>().imageUrl.value),
-                      ),
-                      Text(
-                        Get.find<HomeController>().username.value,
-                        style: const TextStyle(
-                          fontSize: 25,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        Get.find<HomeController>().emailOnScreen.value,
-                        style: const TextStyle(
-                          fontSize: 15,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                    ]))),
+                child: Obx(() =>
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundImage: NetworkImage(
+                                Get
+                                    .find<HomeController>()
+                                    .imageUrl
+                                    .value),
+                          ),
+                          Text(
+                            Get
+                                .find<HomeController>()
+                                .username
+                                .value,
+                            style: const TextStyle(
+                              fontSize: 25,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          Text(
+                            Get
+                                .find<HomeController>()
+                                .emailOnScreen
+                                .value,
+                            style: const TextStyle(
+                              fontSize: 15,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ]))),
             ListTile(
               title: const Text('Print'),
               onTap: () {
@@ -82,11 +92,33 @@ class BacklogScreen extends GetView<BacklogController> {
       ),
       body: Column(children: [
         Expanded(
-            child: ListView.builder(
-                itemCount: backlogController.listOfProjectTasks.length,
-                itemBuilder: (context, int index) {
-                  return TaskTile(
-                      backlogController.listOfProjectTasks[index]);
+            child: GetBuilder<BacklogController>(
+                init: Get.find<BacklogController>(),
+                builder: (value) {
+                  return ReorderableListView.builder(
+                      onReorder: (int oldIndex, int newIndex) {
+                        if(oldIndex < newIndex) {
+                          newIndex -= 1;
+                        }
+                        final Task taskToOrder = Get.find<BacklogController>().listOfProjectTasks.removeAt(oldIndex);
+                        Get.find<BacklogController>().listOfProjectTasks.insert(newIndex, taskToOrder);
+                      },
+                      itemCount: Get
+                          .find<BacklogController>()
+                          .listOfProjectTasks
+                          .length,
+                      itemBuilder: (context, int index) {
+                        GlobalKey globalKey = GlobalKey();
+                        return Draggable(
+                          feedback: Container(
+                            width: 10,
+                          ),
+                          child: TaskTile(Get
+                              .find<BacklogController>()
+                              .listOfProjectTasks[index]),
+                          key: globalKey,
+                        );
+                      });
                 }))
       ]),
       bottomNavigationBar: BottomAppBar(

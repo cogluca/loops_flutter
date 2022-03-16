@@ -5,9 +5,10 @@ class BacklogRepository {
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  List<Task> tasksToReturn = [];
 
   Future<List<Task>> retrieveTasks(int id) async {
+
+      List<Task> tasksToReturn = <Task> [];
 
      QuerySnapshot querySnapshot = await firestore.collection('task').where('id', isEqualTo: id).get();
 

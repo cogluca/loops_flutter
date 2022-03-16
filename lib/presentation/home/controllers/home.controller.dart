@@ -10,19 +10,13 @@ class HomeController extends GetxController {
   RxString emailOnScreen = ''.obs;
   RxString imageUrl = ''.obs;
 
-  List<Project> listOfPresentProjects = <Project> [];
+  RxList<Project> listOfProjects = <Project>[].obs;
 
   LoginRepository loginRepository = LoginRepository();
   HomeRepository homeRepository = HomeRepository();
 
   GetStorage getStorage = Get.find<GetStorage>();
-  int _currentProjectId = 0;
-
-  int get currentProjectId => _currentProjectId;
-
-  set currentProjectId(int value) {
-    _currentProjectId = value;
-  }
+  int currentProjectId = 0;
 
   @override
   void onInit() {
@@ -71,13 +65,15 @@ class HomeController extends GetxController {
     Get.find<GetStorage>().erase();
   }
 
-  Future<List<Project>> getProjects() async {
+  Future<void> getProjects() async {
 
-    listOfPresentProjects = await homeRepository.getProjects();
+    List<Project> recentReceivedProjects = await homeRepository.getProjects();
 
     List<Project> projectsList = await homeRepository.getProjects();
 
-    return projectsList;
+    listOfProjects.addAll(recentReceivedProjects);
+
+    update();
 
     //repository call to fetch the projects
   }

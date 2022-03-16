@@ -8,16 +8,8 @@ import 'package:loops/presentation/home/ProjectTile.dart';
 import 'controllers/home.controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
-  HomeController homeController = Get.put(HomeController());
-
   @override
   Widget build(BuildContext context) {
-    List<Project> unpackedProjects = <Project>[];
-    Future<List<Project>> toDisplayProjects = homeController.getProjects();
-    toDisplayProjects.then((value) {
-      unpackedProjects = value;
-    });
-
     return Scaffold(
         appBar: AppBar(
           title: const Text('Projects'),
@@ -47,14 +39,14 @@ class HomeScreen extends GetView<HomeController> {
                                   NetworkImage(controller.imageUrl.value),
                             ),
                             Text(
-                              homeController.username.value,
+                              Get.find<HomeController>().username.value,
                               style: const TextStyle(
                                 fontSize: 25,
                               ),
                               textAlign: TextAlign.left,
                             ),
                             Text(
-                              homeController.emailOnScreen.value,
+                              Get.find<HomeController>().emailOnScreen.value,
                               style: const TextStyle(
                                 fontSize: 15,
                               ),
@@ -87,11 +79,16 @@ class HomeScreen extends GetView<HomeController> {
         ),
         body: Column(children: [
           Expanded(
-              child: ListView.builder(
-                  itemCount: homeController.listOfPresentProjects.length,
-                  itemBuilder: (context, int index) {
-                    return ProjectTile(
-                        homeController.listOfPresentProjects[index]);
+              child: GetBuilder<HomeController>(
+                  init: Get.find<HomeController>(),
+                  builder: (value) {
+                    return ListView.builder(
+                        itemCount: Get.find<HomeController>().listOfProjects
+                            .length,
+                        itemBuilder: (context, int index) {
+                          return ProjectTile(Get.find<HomeController>()
+                              .listOfProjects[index]);
+                        });
                   }))
         ]));
   }

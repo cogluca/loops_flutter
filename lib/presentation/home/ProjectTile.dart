@@ -16,7 +16,12 @@ class ProjectTile extends GetView<HomeController> {
         child: Padding(
             padding: const EdgeInsets.only(
                 top: 36.0, left: 10.0, right: 6.0, bottom: 6.0),
-            child: ExpansionTile(
+            child: InkWell (
+              onDoubleTap: () {
+                Get.find<HomeController>()
+                    .navigateToBacklog(project.id);
+              },
+                child: ExpansionTile(
               expandedAlignment: Alignment.centerLeft,
               title: Text('Project: ${project.name}'),
               children: <Widget>[
@@ -43,21 +48,9 @@ class ProjectTile extends GetView<HomeController> {
                   const SizedBox(
                     width: 100,
                   ),
-                  Column(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Get.find<HomeController>()
-                              .navigateToBacklog(project.id);
-                        },
-                        icon: const Icon(Icons.arrow_circle_right_outlined),
-                        iconSize: 40,
-                      )
-                    ],
-                  )
                 ])
               ],
-            )),
+            ))),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ));

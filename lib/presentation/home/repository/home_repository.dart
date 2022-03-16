@@ -4,10 +4,14 @@ import 'package:loops/models/Project.dart';
 
 class HomeRepository {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  late List<Project> dataRef = <Project>[];
-  late Project singleProject;
+
+
 
   Future<List<Project>> getProjects() async {
+
+    late List<Project> dataRef = <Project>[];
+    late Project singleProject;
+
     QuerySnapshot querySnapshot = await firestore.collection('projects').get();
 
     if(querySnapshot.docs.isNotEmpty) {
@@ -26,6 +30,7 @@ class HomeRepository {
 
       });
     }
+
     return dataRef;
 
     //write the query to retrieve data from database

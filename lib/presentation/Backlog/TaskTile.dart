@@ -8,7 +8,7 @@ import 'package:loops/presentation/home/controllers/home.controller.dart';
 class TaskTile extends GetView<HomeController> {
   late final Task task;
 
-  TaskTile(this.task);
+  TaskTile(this.task, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +16,8 @@ class TaskTile extends GetView<HomeController> {
         child: Padding(
             padding: const EdgeInsets.only(
                 top: 36.0, left: 10.0, right: 6.0, bottom: 6.0),
+            child: InkWell(
+              onDoubleTap: () => Get.toNamed('/home'),
             child: ExpansionTile(
               expandedAlignment: Alignment.centerLeft,
               title: Text('Task: ${task.name}'),
@@ -43,24 +45,13 @@ class TaskTile extends GetView<HomeController> {
                   const SizedBox(
                     width: 100,
                   ),
-                  Column(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          //TODO plans are to have a card that blurs the background and imposes itself on the screen
-                        },
-                        icon: const Icon(Icons.arrow_circle_right_outlined),
-                        iconSize: 40,
-                      )
-                    ],
-                  )
                 ])
               ],
-            )),
+            ))),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ));
 
-    throw UnimplementedError();
+
   }
 }

@@ -10,10 +10,12 @@ import 'firebase_options.dart';
 
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+
   await GetStorage.init();
   GetStorage getStorage = Get.put(GetStorage());
-  getStorage.initStorage;
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

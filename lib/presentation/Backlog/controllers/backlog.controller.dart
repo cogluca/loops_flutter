@@ -9,7 +9,7 @@ import '../../../models/Task.dart';
 class BacklogController extends GetxController {
 
   BacklogRepository backlogRepository = BacklogRepository();
-  List<Task> listOfProjectTasks = <Task>[];
+  RxList<Task> listOfProjectTasks = <Task>[].obs;
 
   final count = 0.obs;
   @override
@@ -27,14 +27,15 @@ class BacklogController extends GetxController {
   void onClose() {}
 
 
-  Future<List<Task>> retrieveTasksOfProject() async {
+  Future<void> retrieveTasksOfProject() async {
 
     int projectId = Get.find<HomeController>().currentProjectId;
 
     List<Task> tasksOfCurrentProject = await backlogRepository.retrieveTasks(projectId);
-    listOfProjectTasks = await backlogRepository.retrieveTasks(projectId);
+    List<Task> computedTasks= await backlogRepository.retrieveTasks(projectId);
+    listOfProjectTasks.addAll(computedTasks);
 
-    return tasksOfCurrentProject;
+    update();
 
   }
 
