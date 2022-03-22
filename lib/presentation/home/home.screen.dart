@@ -8,6 +8,8 @@ import 'package:loops/presentation/home/ProjectTile.dart';
 import 'controllers/home.controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
+  HomeController homeController = Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +48,7 @@ class HomeScreen extends GetView<HomeController> {
                               textAlign: TextAlign.left,
                             ),
                             Text(
-                              Get.find<HomeController>().emailOnScreen.value,
+                              homeController.emailOnScreen.value,
                               style: const TextStyle(
                                 fontSize: 15,
                               ),
@@ -78,18 +80,87 @@ class HomeScreen extends GetView<HomeController> {
           ),
         ),
         body: Column(children: [
-          Expanded(
-              child: GetBuilder<HomeController>(
-                  init: Get.find<HomeController>(),
-                  builder: (value) {
-                    return ListView.builder(
-                        itemCount: Get.find<HomeController>().listOfProjects
-                            .length,
-                        itemBuilder: (context, int index) {
-                          return ProjectTile(Get.find<HomeController>()
-                              .listOfProjects[index]);
-                        });
-                  }))
-        ]));
+          StreamBuilder<List<Project>>(
+              stream: homeController.getProjects(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<Project>> response) {
+                return Expanded(
+                    child: GetBuilder<HomeController>(
+                        init: Get.find<HomeController>(),
+                        builder: (value) {
+                          if (response.hasData) {
+                            return ListView.builder(
+                                itemCount: response.data?.length,
+                                itemBuilder: (context, int index) {
+                                  return ProjectTile(response.data![index]);
+                                });
+                          } else {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                        }));
+              })
+        ]),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () => {
+                  showDialog(
+                    builder: (BuildContext context) {
+                      return Dialog(
+                          child: Column(
+                        children: [
+                          Container(
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: 'Project name',
+                                hintText: 'Enter project name',
+                                border: OutlineInputBorder(),
+                              ),
+                              controller: homeController.createdNewProject,
+                            ),
+                            padding: const EdgeInsets.all(8.0),
+                          ),
+                          Container(
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: 'When will the project start ?',
+                                hintText: 'dd/mm/yyyy',
+                                border: OutlineInputBorder(),
+                              ),
+                              controller: controller.newStartDate,
+                            ),
+                            padding: const EdgeInsets.all(8.0),
+                          ),
+                          Container(
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: 'When will the project start ?',
+                                hintText: 'dd/mm/yyyy',
+                                border: OutlineInputBorder(),
+                              ),
+                              controller: controller.newEndDate,
+                            ),
+                            padding: const EdgeInsets.all(8.0),
+                          ),
+                          Row(
+                            children: [
+                              TextButton(
+                                  onPressed: () => {
+                                        controller.saveNewlyCreatedProject(),
+                                        Navigator.pop(context)
+                                      },
+                                  child: const Text('Create Project')),
+                              TextButton(
+                                  onPressed: () => {Navigator.pop(context)},
+                                  child: const Text('Cancel'))
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          )
+                        ],
+                      ));
+                    },
+                    context: context,
+                  )
+                },
+            child: const Icon(Icons.add)));
   }
 }

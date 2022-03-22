@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:loops/presentation/home/repository/home_repository.dart';
@@ -15,8 +16,12 @@ class HomeController extends GetxController {
   LoginRepository loginRepository = LoginRepository();
   HomeRepository homeRepository = HomeRepository();
 
+  TextEditingController createdNewProject = TextEditingController();
+  TextEditingController newStartDate = TextEditingController();
+  TextEditingController newEndDate = TextEditingController();
+
   GetStorage getStorage = Get.find<GetStorage>();
-  int currentProjectId = 0;
+  String currentProjectId = '';
 
   @override
   void onInit() {
@@ -65,26 +70,41 @@ class HomeController extends GetxController {
     Get.find<GetStorage>().erase();
   }
 
-  Future<void> getProjects() async {
+
+
+  Stream<List<Project>> getProjects() async* {
+
+    //tODO see if deleting first 3 lines doesn't cause disappearance of data
 
     List<Project> recentReceivedProjects = await homeRepository.getProjects();
-
-    List<Project> projectsList = await homeRepository.getProjects();
 
     listOfProjects.addAll(recentReceivedProjects);
 
     update();
 
+    yield* Stream.periodic(const Duration(seconds: 5), (_) {
+      return homeRepository.getProjects();
+    }).asyncMap((value) async => await value);
+
+
+
     //repository call to fetch the projects
   }
 
-  void writeAndSetProjectIdOnStorage(int id) {
+  void writeAndSetProjectIdOnStorage(String id) {
     getStorage.write('choosenProject', id);
     currentProjectId = id;
   }
 
 
-  void navigateToBacklog(int id) {
+  Future<void> saveNewlyCreatedProject() async {
+
+    await homeRepository.saveNewlyCreatedProject(createdNewProject.text, newStartDate.text, newEndDate.text);
+
+  }
+
+
+  void navigateToBacklog(String id) {
     writeAndSetProjectIdOnStorage(id);
     Get.toNamed('/backlog');
   }

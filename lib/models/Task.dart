@@ -1,13 +1,15 @@
 class Task {
 
-  final int? id;
+  final String? id;
   final String? name;
-  final int? projectId;
-  final int? epicId;
-  final int? teamId;
-  final int? teamMemberId;
+  final String? projectId;
+  final String? epicId;
+  final String? teamId;
+  final String? teamMemberId;
+  final String? startDate;
+  final String? endDate;
 
-  Task(this.id, this.name, this.projectId, this.epicId, this.teamId, this.teamMemberId);
+  Task(this.id, this.name, this.projectId, this.epicId, this.teamId, this.teamMemberId, this.startDate, this.endDate);
 
 
 

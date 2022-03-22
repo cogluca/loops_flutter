@@ -4,8 +4,9 @@ class Routes {
     return HOME;
   }
 
+  static const BACKLOG = '/backlog';
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const PROJECTS = '/projects';
-  static const BACKLOG = '/backlog';
+  static const TIMELINE = '/timeline';
 }

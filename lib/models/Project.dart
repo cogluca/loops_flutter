@@ -1,6 +1,6 @@
 class Project {
 
-  final int _id;
+  final String _id;
   final String _name;
   final String _startDate;
   final String _endDate;
@@ -20,5 +20,5 @@ class Project {
 
   int get taskToDo => _taskToDo;
 
-  int get id => _id;
+  String get id => _id;
 }

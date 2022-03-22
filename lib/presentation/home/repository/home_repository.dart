@@ -5,8 +5,6 @@ import 'package:loops/models/Project.dart';
 class HomeRepository {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-
-
   Future<List<Project>> getProjects() async {
 
     late List<Project> dataRef = <Project>[];
@@ -19,7 +17,7 @@ class HomeRepository {
 
         if (element.exists) {
           singleProject = Project(
-              element.get('id'),
+            element.id.toString(),
               element.get('name'),
               element.get('startDate'),
               element.get('endDate'),
@@ -38,4 +36,21 @@ class HomeRepository {
     //give back the List of Projects to Controller
     //Controller passes them onto a ListView builder and the ListView builder in the widgets renders the projects
   }
+
+  Future<void> saveNewlyCreatedProject(String name, String startDate, String endDate) async {
+
+    await firestore.collection('projects').add(
+      {
+        'name': name,
+        'startDate': startDate,
+        'endDate': endDate,
+        'id': 0,
+        'taskCompleted': 0,
+        'taskToDo': 0
+      }
+    ).then((value) => print(value.id));
+
+
+  }
+
 }

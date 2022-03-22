@@ -24,5 +24,10 @@ class Nav {
       page: () => BacklogScreen(),
       binding: BacklogControllerBinding(),
     ),
+    GetPage(
+      name: Routes.TIMELINE,
+      page: () => TimelineScreen(),
+      binding: TimelineControllerBinding(),
+    ),
   ];
 }

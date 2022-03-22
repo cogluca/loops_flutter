@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:loops/models/Project.dart';
@@ -10,6 +11,12 @@ class BacklogController extends GetxController {
 
   BacklogRepository backlogRepository = BacklogRepository();
   RxList<Task> listOfProjectTasks = <Task>[].obs;
+
+  TextEditingController createdNewTask = TextEditingController();
+  TextEditingController startDate = TextEditingController();
+  TextEditingController endDate = TextEditingController();
+
+
 
   final count = 0.obs;
   @override
@@ -29,13 +36,25 @@ class BacklogController extends GetxController {
 
   Future<void> retrieveTasksOfProject() async {
 
-    int projectId = Get.find<HomeController>().currentProjectId;
+    String projectId = Get.find<HomeController>().currentProjectId;
 
     List<Task> tasksOfCurrentProject = await backlogRepository.retrieveTasks(projectId);
     List<Task> computedTasks= await backlogRepository.retrieveTasks(projectId);
     listOfProjectTasks.addAll(computedTasks);
 
     update();
+
+  }
+
+  Future<void> saveNewlyCreatedTask() async {
+
+    String projectId = Get.find<HomeController>().currentProjectId;
+
+    await backlogRepository.addNewTask(projectId, createdNewTask.text, startDate.text, endDate.text);
+
+
+
+
 
   }
 
