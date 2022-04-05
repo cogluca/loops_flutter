@@ -6,7 +6,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:loops/infrastructure/navigation/bindings/controllers/controllers_bindings.dart';
 import 'package:loops/infrastructure/navigation/navigation.dart';
 import 'package:loops/presentation/login/login.screen.dart';
+import 'package:loops/secrets.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'service/calendar_client.dart';
 import 'firebase_options.dart';
+import 'package:googleapis_auth/auth_io.dart';
+import 'package:googleapis/calendar/v3.dart' as cal;
+import 'package:google_sign_in/google_sign_in.dart';
 
 
 void main() async {
@@ -19,7 +25,24 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+/**
+  var _clientID = ClientId(Secret.getId(), "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");
+  const _scopes = [cal.CalendarApi.calendarScope];
+
+
+  await
+
+  await clientViaUserConsent(_clientID, _scopes, prompt).then((AuthClient client) async {
+    print(client);
+    CalendarClient.calendar = cal.CalendarApi(client);
+  });
+    **/
   runApp(const MyApp());
+}
+
+void prompt(String url) async {
+  await canLaunch(url) ? launch(url): throw "Could not launch $url";
 }
 
 class MyApp extends StatelessWidget {

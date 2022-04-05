@@ -122,6 +122,28 @@ class HomeScreen extends GetView<HomeController> {
                           Container(
                             child: TextFormField(
                               decoration: const InputDecoration(
+                                labelText: 'Project shortDescription',
+                                hintText: 'Enter project name',
+                                border: OutlineInputBorder(),
+                              ),
+                              controller: homeController.oneLiner,
+                            ),
+                            padding: const EdgeInsets.all(8.0),
+                          ),
+                          Container(
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: 'Project goal',
+                                hintText: 'Enter project name',
+                                border: OutlineInputBorder(),
+                              ),
+                              controller: homeController.projectGoal,
+                            ),
+                            padding: const EdgeInsets.all(8.0),
+                          ),
+                          Container(
+                            child: TextFormField(
+                              decoration: const InputDecoration(
                                 labelText: 'When will the project start ?',
                                 hintText: 'dd/mm/yyyy',
                                 border: OutlineInputBorder(),

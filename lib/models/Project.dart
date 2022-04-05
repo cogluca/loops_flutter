@@ -1,24 +1,51 @@
 class Project {
 
-  final String _id;
-  final String _name;
-  final String _startDate;
-  final String _endDate;
-  final int _taskCompleted;
-  final int _taskToDo;
+  final String? id;
+  final String? name;
+  final String? oneLiner;
+  final String? startDate;
+  final String? endDate;
+  final int? taskCompleted;
+  final int? taskToDo;
+  final String? currentSprintId;
+  final String? projectGoal;
 
 
-  Project(this._id, this._name, this._startDate, this._endDate, this._taskCompleted, this._taskToDo);
+  Project({this.id, this.name, this.oneLiner, this.startDate, this.endDate, this.taskCompleted, this.taskToDo, this.currentSprintId, this.projectGoal});
 
-  String get name => _name;
 
-  String get startDate => _startDate;
+  dynamic toJson() => {
+    'id': id.toString(),
+    'name': name.toString(),
+    'oneLiner': oneLiner.toString(),
+    'startDate': startDate.toString(),
+    'endDate': endDate.toString(),
+    'taskCompleted': taskCompleted.toString(),
+    'taskToDo': taskToDo.toString(),
+    'currentSprintId': currentSprintId.toString(),
+    'projectGoal': projectGoal.toString()
+  };
 
-  String get endDate => _endDate;
 
-  int get taskCompleted => _taskCompleted;
+  factory Project.fromJson(Map<String, dynamic> jsonProjectData) {
 
-  int get taskToDo => _taskToDo;
+    return Project(
+      id: jsonProjectData['id'],
+      name: jsonProjectData['name'],
+      oneLiner: jsonProjectData['oneLiner'],
+      startDate: jsonProjectData['startDate'],
+      endDate: jsonProjectData['endDate'],
+      taskCompleted: jsonProjectData['taskCompleted'],
+      taskToDo: jsonProjectData['taskToDo'],
+      currentSprintId: jsonProjectData['currentSprintId'],
+      projectGoal: jsonProjectData['projectGoal']
+    );
+  }
 
-  String get id => _id;
+
+
+
+
+
+
 }

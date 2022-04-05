@@ -9,4 +9,5 @@ class Routes {
   static const LOGIN = '/login';
   static const PROJECTS = '/projects';
   static const TIMELINE = '/timeline';
+  static const PROJECT_OVERVIEW = '/project-overview';
 }

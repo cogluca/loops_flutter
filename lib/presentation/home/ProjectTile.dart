@@ -16,41 +16,15 @@ class ProjectTile extends GetView<HomeController> {
         child: Padding(
             padding: const EdgeInsets.only(
                 top: 36.0, left: 10.0, right: 6.0, bottom: 6.0),
-            child: InkWell (
-              onDoubleTap: () {
-                Get.find<HomeController>()
-                    .navigateToBacklog(project.id);
-              },
-                child: ExpansionTile(
-              expandedAlignment: Alignment.centerLeft,
-              title: Text('Project: ${project.name}'),
-              children: <Widget>[
-                Row(children: [
-                  Column(children: [
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Start date: ${project.startDate}',
-                        )),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('End date: ${project.endDate}')),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                            'Task completed: ${project.taskCompleted.toString()}')),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Task to do: ${project.taskToDo.toString()}',
-                        )),
-                  ]),
-                  const SizedBox(
-                    width: 100,
-                  ),
-                ])
-              ],
-            ))),
+            child: InkWell(
+                onDoubleTap: () {
+                  Get.find<HomeController>()
+                      .navigateToProjectScreen(project.id!, project.name!, project);
+                },
+                child: ListTile(
+                  title: Text('Project: ${project.name}'),
+                  subtitle: Text(project.oneLiner!),
+                ))),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ));
