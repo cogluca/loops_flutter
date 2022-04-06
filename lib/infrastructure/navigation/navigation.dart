@@ -25,11 +25,6 @@ class Nav {
       binding: BacklogControllerBinding(),
     ),
     GetPage(
-      name: Routes.TIMELINE,
-      page: () => TimelineScreen(),
-      binding: TimelineControllerBinding(),
-    ),
-    GetPage(
       name: Routes.PROJECT_OVERVIEW,
       page: () => ProjectOverviewScreen(),
       binding: ProjectOverviewControllerBinding(),

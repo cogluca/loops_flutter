@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:googleapis/transcoder/v1.dart';
-import 'package:loops/presentation/Backlog/TaskTile.dart';
+import 'package:loops/presentation/Backlog/components/TaskTile.dart';
 import 'package:loops/presentation/ui_components.dart';
 
 import '../../models/Task.dart';

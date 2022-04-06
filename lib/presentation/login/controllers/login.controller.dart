@@ -5,7 +5,7 @@ import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:loops/models/AppUser.dart';
 
-import 'package:loops/presentation/login/repository/login_repository.dart';
+import 'package:loops/repository/login_repository.dart';
 
 class LoginController extends GetxController {
   //TODO: Implement LoginController

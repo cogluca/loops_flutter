@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:loops/models/Sprint.dart';
-import 'package:loops/presentation/home/repository/home_repository.dart';
-import 'package:loops/presentation/login/repository/login_repository.dart';
+import 'package:loops/repository/home_repository.dart';
+import 'package:loops/repository/login_repository.dart';
 import 'package:loops/models/Project.dart';
 
 class HomeController extends GetxController {

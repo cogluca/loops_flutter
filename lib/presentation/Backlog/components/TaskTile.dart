@@ -97,7 +97,7 @@ class TaskTile extends GetView<BacklogController> {
                                       ),
                                     )),
                                 Padding(
-                                    padding: EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(8.0),
                                     child: Container(
                                       width: 20,
                                       height: 20,

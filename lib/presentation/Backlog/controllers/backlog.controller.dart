@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:loops/models/Project.dart';
-import 'package:loops/presentation/Backlog/repository/backlog_repository.dart';
+import 'package:loops/repository/backlog_repository.dart';
 import 'package:loops/presentation/home/controllers/home.controller.dart';
 import 'package:loops/service/calendar_client.dart';
 
