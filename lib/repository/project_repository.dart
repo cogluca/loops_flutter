@@ -5,8 +5,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:loops/models/Sprint.dart';
 
-import '../../../models/Task.dart';
-import '../../../service/calendar_client.dart';
+import '../models/Task.dart';
+import '../services/calendar_client.dart';
 
 class ProjectRepository {
   FirebaseFirestore firestore = FirebaseFirestore.instance;

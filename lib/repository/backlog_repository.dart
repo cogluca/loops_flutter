@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:loops/models/Task.dart';
-import 'package:loops/service/calendar_client.dart';
+import 'package:loops/services/calendar_client.dart';
 
 class BacklogRepository {
   FirebaseFirestore firestore = FirebaseFirestore.instance;

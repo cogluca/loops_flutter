@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:loops/infrastructure/navigation/navigation.dart';
+import 'package:loops/navigation_infrastructure/navigation/navigation.dart';
 import 'package:loops/models/AppUser.dart';
 import 'package:loops/presentation/home/home.screen.dart';
 

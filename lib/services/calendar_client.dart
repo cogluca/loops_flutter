@@ -7,7 +7,6 @@ class CalendarClient {
 
    CalendarClient({required this.calendar});
 
-  //TODO Service layer or business logic ?
 
   Future<Map<String, String>> insert({
     required String title,
@@ -19,12 +18,9 @@ class CalendarClient {
     required DateTime startTime,
     required DateTime endTime,
   }) async {
-    //TODO Specify default eventData
+
     late Map<String, String> eventData;
 
-
-    //TODO get your shit together
-    // If the account has multiple calendars, then select the "primary" one
     String calendarId = "primary";
     Event event = Event();
 
@@ -43,7 +39,6 @@ class CalendarClient {
       event.conferenceData = conferenceData;
     }
 
-    //TODO change hard coded GMT
     EventDateTime start = EventDateTime(dateTime: startTime);
     start.dateTime = startTime;
     start.timeZone = "GMT+2";

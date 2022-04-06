@@ -5,8 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart' as cal;
-import 'package:loops/service/calendar_client.dart';
-import 'package:loops/service/google_api_client.dart';
+import 'package:loops/services/calendar_client.dart';
+import 'package:loops/services/google_api_client.dart';
 import 'package:get/get.dart';
 
 class LoginRepository {
