@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:loops/repository/project_repository.dart';
 
-import '../../../models/Sprint.dart';
+import '../../../model/Sprint.dart';
 
 class ProjectOverviewController extends GetxController {
   //TODO: Implement ProjectOverviewController
@@ -70,12 +70,17 @@ class ProjectOverviewController extends GetxController {
   }
 
   Future<void> retrieveCurrentSprint() async {
-    String currentSprintId =
+
+    String currentSprintId = '';
+    late Sprint retrievedSprint;
+
+    currentSprintId =
         Get.find<GetStorage>().read('currentProjectSprintId');
 
-    Sprint retrievedSprint =
-        await projectRepository.retrieveCurrentSprint(currentSprintId);
-
+    if(currentSprintId != '' || currentSprintId != null) {
+      retrievedSprint =
+      await projectRepository.retrieveCurrentSprint(currentSprintId);
+    }
     currentSprint.add(retrievedSprint);
 
     update();
@@ -91,6 +96,8 @@ class ProjectOverviewController extends GetxController {
   }
 
   Future<void> startSprint() async {
+
+
 
     await projectRepository.startASprint(sprintStartDate.text, sprintEndDate.text);
     String currentSprintId = Get.find<GetStorage>().read('currentProjectSprintId');
@@ -141,6 +148,7 @@ class ProjectOverviewController extends GetxController {
   DateTime extractStartDate() {
     String dateTimeToExtract =
         meetingDate.text + " " + meetingStartTime.text + ":00";
+    print(dateTimeToExtract);
     DateTime startDate = DateTime.parse(dateTimeToExtract);
 
     return startDate;

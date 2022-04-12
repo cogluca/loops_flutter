@@ -7,7 +7,7 @@ class Sprint {
 
 
   final String? id;
-  final String? startDate;
+  final String startDate;
   final String? endDate;
   int totalStoryPoints = 0;
   int totalStoryPointsAchieved = 0;
@@ -35,6 +35,12 @@ class Sprint {
       }
     });
     return storyPointsAchieved;
+  }
+
+  int get getBurndown {
+
+    return getTotalStoryPoints - getTotalStoryPointsAchieved;
+
   }
 
 

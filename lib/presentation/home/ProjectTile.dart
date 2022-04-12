@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:loops/models/Project.dart';
+import 'package:loops/model/Project.dart';
 import 'package:loops/presentation/home/controllers/home.controller.dart';
 
 class ProjectTile extends GetView<HomeController> {

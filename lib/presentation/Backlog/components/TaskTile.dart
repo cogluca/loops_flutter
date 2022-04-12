@@ -4,14 +4,15 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:loops/models/Task.dart';
+import 'package:loops/model/Task.dart';
 import 'package:loops/presentation/Backlog/controllers/backlog.controller.dart';
 import 'package:loops/presentation/home/controllers/home.controller.dart';
 
 class TaskTile extends GetView<BacklogController> {
   late final Task task;
+  @override
 
-  TaskTile(this.task, {Key? key}) : super(key: key);
+  TaskTile(this.task, Key key) : super(key: key);
 
   //TODO swipe to the right -> setComplete/backgroundGreen/IconCheckmark && swipe to the left -> trash/BackgroundRed/IconTrash, sorry for leaving you this, haven't had a true free day, it's Sunday
   Widget? showRelevantSwipeBackground() {
@@ -20,7 +21,8 @@ class TaskTile extends GetView<BacklogController> {
 
   @override
   Widget build(BuildContext context) {
-    Key key = GlobalKey();
+    Key aKey = ValueKey(task.id);
+
     return Dismissible(
         onDismissed: (DismissDirection dismissDirection) {
           dismissDirection == DismissDirection.endToStart
@@ -32,20 +34,23 @@ class TaskTile extends GetView<BacklogController> {
             child: const Icon(CupertinoIcons.check_mark_circled_solid)),
         secondaryBackground: Container(
             color: Colors.red, child: const Icon(CupertinoIcons.trash)),
-        key: key,
+
+        key: aKey,
         child: Card(
             child: Padding(
                 padding: const EdgeInsets.only(
                     top: 6.0, left: 10.0, right: 6.0, bottom: 6.0),
                 child: InkWell(
                     child: ListTile(
+                      key: aKey,
                   onTap: () => {
                     showDialog(
-                        builder: (BuildContext context) {
+                        builder: (context) {
                           return Dialog(
                             elevation: 40,
-                            insetPadding: const EdgeInsets.only(
-                                top: 200, bottom: 280, left: 40, right: 40),
+                            insetPadding: MediaQuery.of(context).orientation == Orientation.portrait ?
+                            const EdgeInsets.only(
+                                top: 200, bottom: 260, left: 40, right: 40) : const EdgeInsets.only(top: 40) ,
                             child: Column(
                               children: [
                                 Padding(

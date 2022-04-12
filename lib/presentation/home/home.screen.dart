@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:loops/models/Project.dart';
+import 'package:loops/model/Project.dart';
 import 'package:loops/presentation/home/ProjectTile.dart';
 
 import 'controllers/home.controller.dart';
@@ -80,12 +80,13 @@ class HomeScreen extends GetView<HomeController> {
           ),
         ),
         body: Column(children: [
-          StreamBuilder<List<Project>>(
-              stream: homeController.getProjects(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<Project>> response) {
-                return Expanded(
-                    child: GetBuilder<HomeController>(
+          Expanded(
+              child: StreamBuilder<List<Project>>(
+                  stream: homeController.getProjects(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<Project>> response) {
+                    //does a get builder have a size constraint ?
+                    return GetBuilder<HomeController>(
                         init: Get.find<HomeController>(),
                         builder: (value) {
                           if (response.hasData) {
@@ -98,8 +99,8 @@ class HomeScreen extends GetView<HomeController> {
                             return const Center(
                                 child: CircularProgressIndicator());
                           }
-                        }));
-              })
+                        });
+                  }))
         ]),
         floatingActionButton: FloatingActionButton(
             onPressed: () => {

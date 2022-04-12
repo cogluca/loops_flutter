@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class Task {
   final String id;
   final String name;
@@ -14,6 +12,9 @@ class Task {
   final String sprintId;
   final int storyPoints;
   final bool completed;
+  final String dateCompletion;
+  final String dateInsertion;
+  int order;
 
   Task(
       {required this.id,
@@ -28,7 +29,10 @@ class Task {
       required this.fullDescription,
       required this.sprintId,
       required this.storyPoints,
-      required this.completed});
+      required this.completed,
+      required this.dateCompletion,
+      required this.dateInsertion,
+      required this.order});
 
   dynamic toJson() => {
         'id': id,
@@ -44,6 +48,7 @@ class Task {
         'sprintId': sprintId,
         'storyPoints': storyPoints,
         'completed': completed,
+        'dateInsertion': dateInsertion,
       };
 
   factory Task.fromJson(Map jsonFormatTask) {
@@ -60,6 +65,9 @@ class Task {
         fullDescription: jsonFormatTask['fullDescription'],
         sprintId: jsonFormatTask['sprintId'],
         storyPoints: jsonFormatTask['storyPoints'],
-        completed: jsonFormatTask['completed']);
+        completed: jsonFormatTask['completed'],
+        dateCompletion: jsonFormatTask['dateCompletion'],
+        dateInsertion: jsonFormatTask['dateInsertion'],
+        order: jsonFormatTask['order']);
   }
 }

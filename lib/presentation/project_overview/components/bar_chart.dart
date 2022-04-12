@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../../../models/Sprint.dart';
+import '../../../model/Sprint.dart';
 
 class BarChartSample2 extends StatefulWidget {
   List<Sprint> dataFromSprints;
@@ -56,10 +56,16 @@ class BarChartSample2State extends State<BarChartSample2> {
 
   }
 
+
+  //TODO : Make the whole component responsive, dimensions are hardcoded
   @override
   Widget build(BuildContext context) {
+    widget.dataFromSprints.sort((a,b){
+      return DateTime.parse(a.startDate).compareTo(DateTime.parse(b.startDate));
+    });
+
     return AspectRatio(
-      aspectRatio: 1,
+      aspectRatio: 3,
       child: Card(
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
@@ -74,7 +80,7 @@ class BarChartSample2State extends State<BarChartSample2> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: const <Widget>[
 
                   SizedBox(
@@ -102,7 +108,8 @@ class BarChartSample2State extends State<BarChartSample2> {
                           bottom: BorderSide(width: 1),
                         )),
                     groupsSpace: 10,
-                    barGroups: widget.dataFromSprints.map((dataItem) => makeGroupData(dataItem.getTotalStoryPoints.toDouble(),dataItem.getTotalStoryPointsAchieved.toDouble())
+                    barGroups:
+                      widget.dataFromSprints.map((dataItem) => makeGroupData(dataItem.getTotalStoryPoints.toDouble(),dataItem.getTotalStoryPointsAchieved.toDouble())
                         ).toList()))
               ),
               const SizedBox(

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:loops/models/Project.dart';
+import 'package:loops/model/Project.dart';
 
 class HomeRepository {
   FirebaseFirestore firestore = FirebaseFirestore.instance;

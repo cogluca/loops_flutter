@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:loops/repository/backlog_repository.dart';
 import 'package:loops/presentation/home/controllers/home.controller.dart';
 
-import '../../../models/Task.dart';
+import '../../../model/Task.dart';
 
 class BacklogController extends GetxController {
   BacklogRepository backlogRepository = BacklogRepository();
@@ -73,9 +73,11 @@ class BacklogController extends GetxController {
   Future<void> saveNewlyCreatedTask() async {
     String currentSprintId = "";
     String projectId = Get.find<HomeController>().currentProjectId;
+    int position = Get.find<GetStorage>().read('completeBacklogTasks');
 
     if(assignToSprintState.value == true) {
       currentSprintId = Get.find<GetStorage>().read('currentProjectSprintId');
+      position = Get.find<GetStorage>().read('sprintBacklogTasks');
     }
 
 
@@ -87,11 +89,13 @@ class BacklogController extends GetxController {
         oneLiner.text,
         fullDescription.text,
         int.parse(storyPoints.text),
-        currentSprintId);
+        currentSprintId,
+    position);
   }
 
   Future<void> saveNewTaskPositions(List<Task> reorderedList) async {
     await backlogRepository.reorderTasks(reorderedList);
+
   }
 
   Future<void> markTaskAsCompleted(String taskId) async {

@@ -3,18 +3,16 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:googleapis/calendar/v3.dart';
-import 'package:loops/models/Sprint.dart';
+import 'package:loops/model/Sprint.dart';
 
-import '../models/Task.dart';
+import '../model/Task.dart';
 import '../services/calendar_client.dart';
 
 class ProjectRepository {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<List<Sprint>> retrieveSprint() async {
-
     List<Sprint> retrievedSprints = [];
-
 
     //TODO Nested api calls seems the worst shit that I could possibly do, really not concentrated, get the blob sort it by myself, unload complexity from network to a minimal computation on repository, minimum sorting ?
 
@@ -22,7 +20,6 @@ class ProjectRepository {
         await firestore.collection('sprint').get();
 
     if (querySnapshotOfSprint.size > 0) {
-
       querySnapshotOfSprint.docs.forEach((element) {
         Sprint aRetrievedSprint = Sprint(
             id: element.id,
@@ -62,7 +59,10 @@ class ProjectRepository {
                 fullDescription: element.get('fullDescription'),
                 sprintId: element.get('sprintId'),
                 storyPoints: element.get('storyPoints'),
-                completed: element.get('completed'));
+                completed: element.get('completed'),
+                dateCompletion: element.get('dateCompletion'),
+                dateInsertion: element.get('dateInsertion'),
+                order: element.get('order'));
             sprintElement.listOfTasks.add(aRetrievedTask);
           }
         }
@@ -111,7 +111,10 @@ class ProjectRepository {
             fullDescription: element.get('fullDescription'),
             sprintId: element.get('sprintId'),
             storyPoints: element.get('storyPoints'),
-            completed: element.get('completed'));
+            completed: element.get('completed'),
+            dateCompletion: element.get('dateCompletion'),
+            dateInsertion: element.get('dateInsertion'),
+            order: element.get('order'));
         tasksOfSprint.add(aRetrievedTask);
       });
     }
@@ -149,8 +152,6 @@ class ProjectRepository {
       'totalStoryPoints': 0,
       'totalStoryPointsAchieved': 0,
     }).then((value) => value.id);
-
-    print('current sprint id is ${sprintId}');
 
     String projectId = Get.find<GetStorage>().read('choosenProject');
 

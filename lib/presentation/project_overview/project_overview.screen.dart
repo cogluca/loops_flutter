@@ -5,9 +5,12 @@ import 'package:flutter/rendering.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:loops/presentation/general_components/scroll_speed.dart';
+import 'package:loops/presentation/project_overview/components/meet_dialog.dart';
+import 'package:loops/presentation/project_overview/components/sprint_dialog.dart';
 
-import '../../models/Project.dart';
-import '../../models/Sprint.dart';
+import '../../model/Project.dart';
+import '../../model/Sprint.dart';
 import '../home/controllers/home.controller.dart';
 import 'components/bar_chart.dart';
 import 'controllers/project_overview.controller.dart';
@@ -31,8 +34,6 @@ class ProjectOverviewScreen extends GetView<ProjectOverviewController> {
         title: Text(projectName),
         centerTitle: true,
         actions: <Widget>[
-          IconButton(
-              onPressed: () => {}, icon: const Icon(Icons.notifications)),
           IconButton(
               onPressed: () => {_scaffoldKey.currentState!.openEndDrawer()},
               icon: const Icon(Icons.more_vert_outlined)),
@@ -108,241 +109,293 @@ class ProjectOverviewScreen extends GetView<ProjectOverviewController> {
           ],
         ),
       ),
-      endDrawer: Drawer(
-        child: ListView(shrinkWrap: true, children: [
-          Container(
-            alignment: Alignment.center,
-            child: const Text(
-              'Meet',
-              style: TextStyle(fontSize: 20),
-            ),
-          ),
-          Container(
-            child: Obx(() => DropdownButton<String>(
-                  value: controller.meetingType.value,
-                  onChanged: (String? newValue) {
-                    controller.meetingType.value = newValue!;
-                  },
-                  items: <String>[
-                    'Sprint Planning',
-                    'Sprint Retrospective',
-                    'Daily Meet',
-                    'One-To-One',
-                  ]
-                      .map<DropdownMenuItem<String>>(
-                          (value) => DropdownMenuItem(
-                                child: Text(value),
-                                value: value,
-                              ))
-                      .toList(),
-                )),
-            padding: const EdgeInsets.only(left: 20.0, top: 20),
-          ),
-          Container(
-            child: TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'What date does the meeting happen ?',
-                hintText: 'yyyy/mm/dd',
-                border: OutlineInputBorder(),
-              ),
-              controller: controller.meetingDate,
-            ),
-            padding: const EdgeInsets.all(8.0),
-          ),
-          Container(
-            child: TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'When will the meeting start ?',
-                hintText: 'e.g 14:30',
-                border: OutlineInputBorder(),
-              ),
-              controller: controller.meetingStartTime,
-            ),
-            padding: const EdgeInsets.all(8.0),
-          ),
-          Container(
-            child: TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'When will the meeting end ?',
-                hintText: 'e.g 15:00',
-                border: OutlineInputBorder(),
-              ),
-              controller: controller.meetingEndTime,
-            ),
-            padding: const EdgeInsets.all(8.0),
-          ),
-          Container(
-            child: TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Who will participate ?',
-                hintText: 'List the emails with a ;',
-                border: OutlineInputBorder(),
-              ),
-              controller: controller.emailsOnForm,
-            ),
-            padding: const EdgeInsets.all(8.0),
-          ),
-          Container(
-            child: TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Event Description',
-                hintText: 'Brief summary of event',
-                border: OutlineInputBorder(),
-              ),
-              controller: controller.meetingDescription,
-            ),
-            padding: const EdgeInsets.all(8.0),
-          ),
-          Container(
-            child: TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Location',
-                hintText: 'On Google meet ? remote',
-                border: OutlineInputBorder(),
-              ),
-              controller: controller.locationOfMeeting,
-            ),
-            padding: const EdgeInsets.all(8.0),
-          ),
-          Container(
-            child: Obx(() => Center(
-                    child: SwitchListTile(
-                  onChanged: (bool value) {
-                    controller.conferenceSupportState.value = value;
-                  },
-                  value: controller.conferenceSupportState.value,
-                  title: const Text('Google Meet'),
-                ))),
-            padding: const EdgeInsets.all(8.0),
-          ),
-          Container(
-            child: Obx(() => Center(
-                    child: SwitchListTile(
-                  onChanged: (bool value) {
-                    controller.notifyAttendantsState.value = value;
-                  },
-                  value: controller.notifyAttendantsState.value,
-                  title: const Text('Notify attendants'),
-                ))),
-            padding: const EdgeInsets.all(8.0),
-          ),
-          Container(
-            child: TextButton(
-              child: const Text('Invite'),
-              onPressed: () {
-                controller.sendGoogleMeetInvite();
-                Navigator.of(context).pop();
-                Get.snackbar('Mission accomplished',
-                    'Invite sent correctly, check calendar your calendar for the event info');
-              },
-            ),
-            padding: const EdgeInsets.all(8.0),
-            alignment: Alignment.center,
-          ),
-        ]),
-      ),
+      endDrawer: MeetDialog(),
       endDrawerEnableOpenDragGesture: true,
-      body: Column(
-        children: [
-          const Padding(padding: EdgeInsets.only(top: 10)),
-          StreamBuilder<List<Sprint>>(
-            initialData: controller.dataFromSprints,
-            stream: controller.retrieveSprints(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<Sprint>> dataSnapshot) {
-              return Expanded(
-                  child: Card(child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                      child: BarChartSample2(dataSnapshot.data!))));
-            },
-          ),
-          const Text(
-            'Sprint',
-            style: TextStyle(fontSize: 20),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Obx(() {
-                if (controller.currentSprint.isEmpty) {
-                  return const Text('None active');
-                } else {
-                  return Text(
-                    'Current Sprint: From ${controller.currentSprint[0].startDate.toString()} To ${controller.currentSprint[0].endDate.toString()} ',
-                    style: const TextStyle(fontSize: 15),
-                  );
-                }
-              }),
-            ],
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Card(
-                child: TextButton(
-              onPressed: () {
-                showDialog(
-                    builder: (BuildContext context) {
-                      return Dialog(
-                        insetPadding: const EdgeInsets.only(
-                            bottom: 400, top: 140, left: 20, right: 20),
-                        child: Column(children: [
-                          Container(
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: 'Sprint start date',
-                                hintText: 'Enter sprint start date',
-                                border: OutlineInputBorder(),
-                              ),
-                              controller: controller.sprintStartDate,
-                            ),
-                            padding: const EdgeInsets.all(8.0),
-                          ),
-                          Container(
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: 'Sprint end date',
-                                hintText: 'Enter sprint end date',
-                                border: OutlineInputBorder(),
-                              ),
-                              controller: controller.sprintEndDate,
-                            ),
-                            padding: const EdgeInsets.all(8.0),
-                          ),
-                          Card(
-                            child: TextButton(
-                              child: const Text(
-                                'Start Sprint',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              onPressed: () {
-                                controller.startSprint();
-                                Navigator.pop(context);
-                              },
-                            ),
-                            color: Colors.blue,
-                          )
-                        ]),
-                      );
+      body: MediaQuery.of(context).orientation == Orientation.portrait
+          ? Column(
+              children: [
+                const Padding(padding: EdgeInsets.only(top: 10)),
+                Expanded(
+                    child: StreamBuilder<List<Sprint>>(
+                        initialData: controller.dataFromSprints,
+                        stream: controller.retrieveSprints(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<Sprint>> dataSnapshot) {
+                          if (dataSnapshot.connectionState !=
+                              ConnectionState.waiting) {
+                            return Card(
+                                child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child:
+                                        BarChartSample2(dataSnapshot.data!)));
+                          } else {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                        })),
+                const Text(
+                  'Sprint',
+                  style: TextStyle(fontSize: 20),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Obx(() {
+                      if (controller.currentSprint.isEmpty) {
+                        return const Text('None active');
+                      } else {
+                        return Text(
+                          'Current Sprint: From ${controller.currentSprint[0].startDate.toString()} To ${controller.currentSprint[0].endDate.toString()} ',
+                          style: const TextStyle(fontSize: 15),
+                        );
+                      }
+                    }),
+                  ],
+                ),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Obx(() {
+                    if (controller.currentSprint.isEmpty) {
+                      return Card(
+                          child: TextButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Wrap(children: [Column(children: [
+                                  const SizedBox(height: 25,),
+                                  Container(
+                                    child: TextFormField(
+                                      decoration: const InputDecoration(
+                                        labelText: 'Sprint start date',
+                                        hintText: 'Enter sprint start date',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      controller: controller.sprintStartDate,
+                                      onTap: () async {
+                                        String pickedMonth = '';
+                                        String pickedDay = '';
+                                        DateTime? pickedDate = await showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime.now(),
+                                            lastDate: DateTime.utc(2050));
+                                        pickedMonth = pickedDate!.month.toString();
+                                        pickedDay = pickedDate.day.toString();
+                                        if (pickedMonth.length > 1) {
+                                          controller.sprintStartDate.text =
+                                          '${pickedDate.year}-${pickedDate.month}-';
+                                        } else {
+                                          controller.sprintStartDate.text =
+                                          '${pickedDate.year}-0${pickedDate.month}-';
+                                        }
+                                        if(pickedDay.length > 1){
+                                          controller.sprintStartDate.text += '${pickedDate.day}';
+                                        }
+                                        else{
+                                          controller.sprintStartDate.text += '0${pickedDate.day}';
+                                        }
+                                      },
+                                    ),
+                                    padding: const EdgeInsets.all(8.0),
+                                  ),
+                                  Container(
+                                    child: TextFormField(
+                                      decoration: const InputDecoration(
+                                        labelText: 'Sprint end date',
+                                        hintText: 'Enter sprint end date',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      controller: controller.sprintEndDate,
+                                      onTap: () async {
+                                        String pickedMonth = '';
+                                        String pickedDay = '';
+                                        DateTime? pickedDate = await showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime.now(),
+                                            lastDate: DateTime.utc(2050));
+                                        pickedMonth = pickedDate!.month.toString();
+                                        pickedDay = pickedDate!.day.toString();
+                                        if (pickedMonth.length > 1) {
+                                          controller.sprintEndDate.text =
+                                          '${pickedDate.year}-${pickedDate.month}-';
+                                        } else {
+                                          controller.sprintEndDate.text =
+                                          '${pickedDate.year}-0${pickedDate.month}-';
+                                        }
+                                        if(pickedDay.length > 1){
+                                          controller.sprintEndDate.text += '${pickedDate.day}';
+                                        }
+                                        else{
+                                          controller.sprintEndDate.text += '0${pickedDate.day}';
+                                        }
+                                      },
+                                    ),
+                                    padding: const EdgeInsets.all(8.0),
+                                  ),
+                                  Card(
+                                    child: TextButton(
+                                      child: const Text(
+                                        'Start Sprint',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () {
+                                        controller.startSprint();
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    color: Colors.blue,
+                                  ),
+                                  const SizedBox(height: 25,),
+                                ])]);
+                              });
+                        },
+                        child: const Text('Start a sprint'),
+                      ));
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  }),
+                  Obx(() {
+                    if (controller.currentSprint.isNotEmpty) {
+                      return Card(
+                          child: TextButton(
+                        onPressed: () {
+                          controller.turnSprintOff();
+                        },
+                        child: const Text('End Sprint'),
+                      ));
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  })
+                ]),
+              ],
+            )
+          : Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              Expanded(
+                  flex: 1,
+                  child: StreamBuilder<List<Sprint>>(
+                    initialData: controller.dataFromSprints,
+                    stream: controller.retrieveSprints(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Sprint>> dataSnapshot) {
+                      if (dataSnapshot.connectionState !=
+                          ConnectionState.waiting) {
+                        return Card(
+                            child: SingleChildScrollView(
+                                controller: AdjustableScrollController(20),
+                                scrollDirection: Axis.horizontal,
+                                child: BarChartSample2(dataSnapshot.data!)));
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
                     },
-                    context: context);
-              },
-              child: const Text('Start a sprint'),
-            )),
-            Obx(() {
-              if (controller.currentSprint.isNotEmpty) {
-                return Card(
-                    child: TextButton(
-                  onPressed: () {
-                    controller.turnSprintOff();
-                  },
-                  child: const Text('End Sprint'),
-                ));
-              } else {
-                return const SizedBox.shrink();
-              }
-            })
-          ]),
-        ],
-      ),
+                  )),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Current Sprint: '),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Obx(() {
+                        if (controller.currentSprint.isEmpty) {
+                          return const Text('None active');
+                        } else {
+                          return Text(
+                            'From ${controller.currentSprint[0].startDate.toString()} To ${controller.currentSprint[0].endDate.toString()} ',
+                            style: const TextStyle(fontSize: 15),
+                          );
+                        }
+                      }),
+                    ],
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 39),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Card(
+                          child: TextButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Column(children: [
+                                  Container(
+                                    child: TextFormField(
+                                      decoration: const InputDecoration(
+                                        labelText: 'Sprint start date',
+                                        hintText: 'Enter sprint start date',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      controller: controller.sprintStartDate,
+                                      onTap: () async {
+                                        DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.utc(2025));
+                                        controller.sprintStartDate.text = '${pickedDate?.year}-${pickedDate?.month}-${pickedDate?.day}';
+                                      },
+                                    ),
+                                    padding: const EdgeInsets.all(8.0),
+                                  ),
+                                  Container(
+                                    child: TextFormField(
+                                      decoration: const InputDecoration(
+                                        labelText: 'Sprint end date',
+                                        hintText: 'Enter sprint end date',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      controller: controller.sprintEndDate,
+                                      onTap: () async {
+                                        DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.utc(2025));
+                                        controller.sprintEndDate.text = '${pickedDate?.year}-${pickedDate?.month}-${pickedDate?.day}';
+                                      },
+                                    ),
+                                    padding: const EdgeInsets.all(8.0),
+                                  ),
+                                  Card(
+                                    child: TextButton(
+                                      child: const Text(
+                                        'Start Sprint',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () {
+                                        controller.startSprint();
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    color: Colors.blue,
+                                  )
+                                ]);
+                              });
+                        },
+                        child: const Text('Create a sprint'),
+                      )),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Obx(() {
+                        if (controller.currentSprint.isNotEmpty) {
+                          return Card(
+                              child: TextButton(
+                            onPressed: () {
+                              controller.turnSprintOff();
+                            },
+                            child: const Text('End Sprint'),
+                          ));
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      })
+                    ],
+                  )
+                ],
+              )
+            ]),
       bottomNavigationBar: BottomAppBar(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -351,13 +404,18 @@ class ProjectOverviewScreen extends GetView<ProjectOverviewController> {
                 onPressed: () {
                   Get.toNamed('/backlog');
                 },
-                icon: const Icon(Icons.book, size: 24,)),
+                icon: const Icon(
+                  Icons.book,
+                  size: 24,
+                )),
             IconButton(
                 onPressed: () {
                   Get.toNamed('project-overview');
                 },
-                icon: const Icon(Icons.home, size: 26,)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.timer, size: 24,))
+                icon: const Icon(
+                  Icons.home,
+                  size: 26,
+                )),
           ],
         ),
       ),
