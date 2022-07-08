@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:googleapis/calendar/v3.dart';
+import 'package:loops/error_handling/Failure.dart';
 import 'package:loops/model/Task.dart';
 import 'package:loops/services/calendar_client.dart';
 
@@ -14,7 +15,9 @@ class BacklogRepository {
     QuerySnapshot querySnapshot = await firestore
         .collection('task')
         .where('projectId', isEqualTo: projectId)
-        .get();
+        .get()
+        .onError((error, stackTrace) =>
+            throw Failure("Error while retrieving complete project task list"));
 
     String sprintId = Get.find<GetStorage>().read('currentProjectSprintId');
 
@@ -43,7 +46,7 @@ class BacklogRepository {
       });
     }
 
-    tasksToReturn.sort((a,b){
+    tasksToReturn.sort((a, b) {
       return a.order.compareTo(b.order);
     });
 
@@ -60,7 +63,9 @@ class BacklogRepository {
     QuerySnapshot querySnapshot = await firestore
         .collection('task')
         .where('sprintId', isEqualTo: sprintId)
-        .get();
+        .get()
+        .onError((error, stackTrace) => throw Failure(
+            'There was a problem retrieving tasks of current Sprint'));
 
     if (querySnapshot.size > 0) {
       querySnapshot.docs.forEach((element) {
@@ -89,9 +94,10 @@ class BacklogRepository {
         }
       });
     }
+
     Get.find<GetStorage>().write('sprintBacklogTasks', tasksToReturn.length);
 
-    tasksToReturn.sort((a,b){
+    tasksToReturn.sort((a, b) {
       return a.order.compareTo(b.order);
     });
 
@@ -100,50 +106,26 @@ class BacklogRepository {
 
   Future<void> orderTasks() async {}
 
-  Future<void> addNewTask(
-      String projectId,
-      String createdProjectName,
-      String startDate,
-      String endDate,
-      String oneLiner,
-      String fullDescription,
-      int storyPoints,
-      String sprintId,
-      int position) async {
-
-    firestore.collection('task').add({
-      'name': createdProjectName,
-      'startDate': startDate,
-      'endDate': endDate,
-      'teamId': '',
-      'projectId': projectId,
-      'epicId': '',
-      'order': position,
-      'teamMemberId': '',
-      'oneLiner': oneLiner,
-      'fullDescription': fullDescription,
-      'storyPoints': storyPoints,
-      'sprintId': sprintId,
-      'completed': false,
-      'dateCompletion': '',
-      'dateInsertion':
-          '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'
-    });
+  //this is something that could be passed as an object, the Repository shouldn't be bothered by an objects internals
+  Future<void> addNewTask(Task toInsertTask) async {
+    firestore.collection('task').add(toInsertTask.toJson()).onError(
+        (error, stackTrace) =>
+            throw Failure('There was an error adding new Task onto database'));
   }
 
   Future<void> reorderTasks(List<Task> reorderedList) async {
-
     int position = 0;
     reorderedList.forEach((element) {
       element.order = position;
       position++;
     });
 
-
     for (var element in reorderedList) {
-      await firestore.collection('task').doc(element.id).update({'order': element.order});
+      await firestore
+          .collection('task')
+          .doc(element.id)
+          .update({'order': element.order});
     }
-
   }
 
   Future<void> markTaskAsCompleted(String taskId) async {
@@ -151,11 +133,14 @@ class BacklogRepository {
       'completed': true,
       'dateCompletion':
           '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}'
-    });
+    }).onError((error, stackTrace) =>
+        throw Failure('There was an error while marking task as completed'));
   }
 
   Future<void> deleteTask(String taskId) async {
-    await firestore.collection('task').doc(taskId).delete();
+    await firestore.collection('task').doc(taskId).delete().onError(
+        (error, stackTrace) =>
+            throw Failure('There was a problem deleting the task'));
   }
 
   Future<void> sendMeetingInvite(
@@ -173,15 +158,17 @@ class BacklogRepository {
       meetingAttendees.add(anAttendee);
     });
 
-    await Get.find<CalendarClient>().insert(
-        title: meetingTitle,
-        description: meetingDescription,
-        location: meetingLocation,
-        attendeeEmailList: meetingAttendees,
-        shouldNotifyAttendees: nofityAttendees,
-        hasConferenceSupport: conferenceSupport,
-        startTime: meetingBeginning,
-        endTime: meetingEnding);
+    await Get.find<CalendarClient>()
+        .insert(
+            title: meetingTitle,
+            description: meetingDescription,
+            location: meetingLocation,
+            attendeeEmailList: meetingAttendees,
+            shouldNotifyAttendees: nofityAttendees,
+            hasConferenceSupport: conferenceSupport,
+            startTime: meetingBeginning,
+            endTime: meetingEnding)
+        .onError((error, stackTrace) => throw stackTrace);
   }
 
   Future<void> assignTaskToSprint() async {}

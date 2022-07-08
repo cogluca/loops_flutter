@@ -49,8 +49,6 @@ class ProjectOverviewController extends GetxController {
   @override
   void onClose() {}
 
-  void increment() => count.value++;
-
   void setScreenTitle() {
     screenTitle = getStorage.read('choosenProjectName');
   }
@@ -97,8 +95,6 @@ class ProjectOverviewController extends GetxController {
 
   Future<void> startSprint() async {
 
-
-
     await projectRepository.startASprint(sprintStartDate.text, sprintEndDate.text);
     String currentSprintId = Get.find<GetStorage>().read('currentProjectSprintId');
     currentSprint.add(await projectRepository.retrieveCurrentSprint(currentSprintId));
@@ -107,9 +103,11 @@ class ProjectOverviewController extends GetxController {
   }
 
   Future<void> sendGoogleMeetInvite() async {
+
+
     List<String> attendants = extractEmailsFromString();
-    DateTime meetingStartsAt = extractStartDate();
-    DateTime meetingEndsAt = extractEndDate();
+    DateTime meetingStartsAt = extractDate(meetingDate: meetingDate.text, meetingTime: meetingStartTime.text);
+    DateTime meetingEndsAt = extractDate(meetingDate: meetingDate.text, meetingTime: meetingEndTime.text);
     String location = locationOfMeeting.text;
     bool conferenceSupport = conferenceSupportState.value;
     bool notifyAttendants = notifyAttendantsState.value;
@@ -145,22 +143,24 @@ class ProjectOverviewController extends GetxController {
     return emails;
   }
 
+  //TODO : Refactor into single method these two, and there should be a better way of handling date time
+
+  /**
   DateTime extractStartDate() {
     String dateTimeToExtract =
         meetingDate.text + " " + meetingStartTime.text + ":00";
-    print(dateTimeToExtract);
     DateTime startDate = DateTime.parse(dateTimeToExtract);
 
     return startDate;
   }
+      **/
 
-  DateTime extractEndDate() {
+  DateTime extractDate({required String meetingDate, required String meetingTime}) {
     String dateTimeToExtract =
-        meetingDate.text + " " + meetingEndTime.text + ":00";
+        meetingDate + " " + meetingTime + ":00";
     DateTime endDate = DateTime.parse(dateTimeToExtract);
 
     return endDate;
   }
-
 
 }

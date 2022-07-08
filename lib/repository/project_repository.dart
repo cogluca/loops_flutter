@@ -69,15 +69,6 @@ class ProjectRepository {
       }
     }
 
-    //TODO FUCK IT TIRED SORT LISTS AND THEN CYCLE THROUGH NOT WITH TWO NESTED LOOPS, RECURSIVELY MAYBE AND FROM THERE ADD TASKS TO THE CORRECT LIST ELEMENTS, SHOULD BE A SCALABLE APPROACH TO REDUCE TIMES
-
-    //retrievedSprints.sort((a,b) => a.id.length.compareTo(b.id.length));
-    //tasksOfSprint.sort()
-
-//Where do I go in the afterlife ? Beyond space and time
-
-    //unicity of sprint is not granted, can assume unicity from Firestore generated ID
-
     return retrievedSprints;
   }
 

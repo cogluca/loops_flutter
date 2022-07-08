@@ -65,7 +65,7 @@ class BarChartSample2State extends State<BarChartSample2> {
     });
 
     return AspectRatio(
-      aspectRatio: 3,
+      aspectRatio: 2,
       child: Card(
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
@@ -74,18 +74,19 @@ class BarChartSample2State extends State<BarChartSample2> {
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: const <Widget>[
 
                   SizedBox(
                     width: 89,
                   ),
+
                   Text(
                     'Project Velocity',
                     style: TextStyle(color: Colors.white, fontSize: 22),
@@ -100,6 +101,7 @@ class BarChartSample2State extends State<BarChartSample2> {
               ),
               Expanded(
                 child: BarChart(BarChartData(
+                  alignment: BarChartAlignment.start,
                     borderData: FlBorderData(
                         border: const Border(
                           top: BorderSide.none,

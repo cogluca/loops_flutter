@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 
 class AdjustableScrollController extends ScrollController {
-  AdjustableScrollController([int extraScrollSpeed = 40]) {
+  AdjustableScrollController([int extraScrollSpeed = 100]) {
     super.addListener(() {
       ScrollDirection scrollDirection = super.position.userScrollDirection;
       if (scrollDirection != ScrollDirection.idle) {
