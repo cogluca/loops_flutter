@@ -10,7 +10,7 @@ Minimalistic PoC to handle a simplified Scrum workflow
 
 ## Instructions to run
 
-- Install and extension that can handle flutter builds or run it smoothly with Android Studio
+- Install an extension that can handle flutter builds or run it smoothly with Android Studio
 - Clone the project in its current version
 - Add the client Id's for both Android and Apple in a file named secrets.dart
 - Refer to [FlutterFire Docs](https://firebase.google.com/docs/guides) for more information on how to run a Flutter project
