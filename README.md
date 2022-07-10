@@ -2,10 +2,10 @@
 
 Minimalistic PoC to handle a simplified Scrum workflow
 
-✅ Manage current sprint tasks and a complete project backlog
-✅ Notify via Mail for an incoming team or individual event
-✅ Connect through Google Meet for video conferencing
-✅ See project velocity by comparing Sprints and their relative degree of completion over a graph
+- ✅ Manage current sprint tasks and a complete project backlog
+- ✅ Notify via Mail for an incoming team or individual event
+- ✅ Connect through Google Meet for video conferencing
+- ✅ See project velocity by comparing Sprints and their relative degree of completion over a graph
 
 
 ## Instructions to run
