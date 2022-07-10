@@ -16,11 +16,11 @@ Done following the design thinking methodology
 - Primary research with restricted population samples
 - Initial development of Graphic Prototypes to reduce initial mistakes and iterations over each new discovery
 - Development of an affinity diagram related to different problems sampled
-  [Affinity diagram](./static_resources/affinity_diagram.png)
+  ![Affinity diagram](./static_resources/affinity_diagram.png)
 
 ## Initial proposed architecture draft
 
-  [Architecture](./static_resources/proposed_architecture.png)
+  ![Architecture](./static_resources/proposed_architecture.png)
 
 
 ## Instructions to run
