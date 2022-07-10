@@ -1,4 +1,4 @@
-# loops_flutter
+# Loops 🔁
 
 Minimalistic PoC to handle a simplified Scrum workflow
 
