@@ -19,11 +19,11 @@ class ProjectTile extends GetView<HomeController> {
             child: InkWell(
                 onDoubleTap: () {
                   Get.find<HomeController>()
-                      .navigateToProjectScreen(project.id!, project.name!, project);
+                      .navigateToProjectScreen(project.id, project.name, project);
                 },
                 child: ListTile(
                   title: Text('Project: ${project.name}'),
-                  subtitle: Text(project.oneLiner!),
+                  subtitle: Text(project.oneLiner),
                 ))),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),

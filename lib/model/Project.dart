@@ -1,51 +1,106 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Project {
+  String _id;
+  String _name;
 
-  final String? id;
-  final String? name;
-  final String? oneLiner;
-  final String? startDate;
-  final String? endDate;
-  final int? taskCompleted;
-  final int? taskToDo;
-  final String? currentSprintId;
-  final String? projectGoal;
+  String _oneLiner;
 
+  String _startDate;
 
-  Project({this.id, this.name, this.oneLiner, this.startDate, this.endDate, this.taskCompleted, this.taskToDo, this.currentSprintId, this.projectGoal});
+  String _endDate;
+  int _taskCompleted;
+  int _taskToDo;
+  String _currentSprintId;
+  String _projectGoal;
 
+  Project(
+      this._id,
+      this._name,
+      this._oneLiner,
+      this._startDate,
+      this._endDate,
+      this._taskCompleted,
+      this._taskToDo,
+      this._currentSprintId,
+      this._projectGoal);
 
   dynamic toJson() => {
-    'id': id.toString(),
-    'name': name.toString(),
-    'oneLiner': oneLiner.toString(),
-    'startDate': startDate.toString(),
-    'endDate': endDate.toString(),
-    'taskCompleted': taskCompleted.toString(),
-    'taskToDo': taskToDo.toString(),
-    'currentSprintId': currentSprintId.toString(),
-    'projectGoal': projectGoal.toString()
-  };
+        'id': id,
+        'name': name.toString(),
+        'oneLiner': oneLiner.toString(),
+        'startDate': startDate.toString(),
+        'endDate': endDate.toString(),
+        'taskCompleted': taskCompleted,
+        'taskToDo': taskToDo,
+        'currentSprintId': currentSprintId.toString(),
+        'projectGoal': projectGoal.toString()
+      };
 
-
-  factory Project.fromJson(Map<String, dynamic> jsonProjectData) {
-
+  factory Project.fromJson(QueryDocumentSnapshot jsonProjectData) {
     return Project(
-      id: jsonProjectData['id'],
-      name: jsonProjectData['name'],
-      oneLiner: jsonProjectData['oneLiner'],
-      startDate: jsonProjectData['startDate'],
-      endDate: jsonProjectData['endDate'],
-      taskCompleted: jsonProjectData['taskCompleted'],
-      taskToDo: jsonProjectData['taskToDo'],
-      currentSprintId: jsonProjectData['currentSprintId'],
-      projectGoal: jsonProjectData['projectGoal']
-    );
+        jsonProjectData.id,
+        jsonProjectData['name'],
+        jsonProjectData['oneLiner'],
+        jsonProjectData['startDate'],
+        jsonProjectData['endDate'],
+        jsonProjectData['taskCompleted'],
+        jsonProjectData['taskToDo'],
+        jsonProjectData['currentSprintId'],
+        jsonProjectData['projectGoal']);
   }
 
+  String get id => _id;
 
+  String get name => _name;
 
+  String get oneLiner => _oneLiner;
 
+  String get startDate => _startDate;
 
+  String get endDate => _endDate;
 
+  int get taskCompleted => _taskCompleted;
 
+  int get taskToDo => _taskToDo;
+
+  String get currentSprintId => _currentSprintId;
+
+  String get projectGoal => _projectGoal;
+
+  set id(String value) {
+    _id = value;
+  }
+
+  set name(String value) {
+    _name = value;
+  }
+
+  set oneLiner(String value) {
+    _oneLiner = value;
+  }
+
+  set startDate(String value) {
+    _startDate = value;
+  }
+
+  set endDate(String value) {
+    _endDate = value;
+  }
+
+  set taskCompleted(int value) {
+    _taskCompleted = value;
+  }
+
+  set taskToDo(int value) {
+    _taskToDo = value;
+  }
+
+  set currentSprintId(String value) {
+    _currentSprintId = value;
+  }
+
+  set projectGoal(String value) {
+    _projectGoal = value;
+  }
 }

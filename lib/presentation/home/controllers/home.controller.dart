@@ -101,12 +101,10 @@ class HomeController extends GetxController {
   }
 
   Future<void> saveNewlyCreatedProject() async {
-    await homeRepository.saveNewlyCreatedProject(
-        name: createdNewProject.text,
-        projectGoal: projectGoal.text,
-        oneLiner: oneLiner.text,
-        startDate: newStartDate.text,
-        endDate: newEndDate.text);
+    
+    Project toSaveProject = Project('', createdNewProject.text, oneLiner.text, newStartDate.text, newEndDate.text, 0, 0, '', projectGoal.text);
+    
+    await homeRepository.saveNewlyCreatedProject(projectToBeSaved: toSaveProject);
   }
 
   void navigateToBacklog(String id, projectName) {
@@ -116,7 +114,7 @@ class HomeController extends GetxController {
 
   void navigateToProjectScreen(String id, String projectName, Project project) {
     writeAndSetProjectIdOnStorage(id, projectName);
-    writeProjectCurrentSprint(project.currentSprintId!);
+    writeProjectCurrentSprint(project.currentSprintId);
     Get.toNamed('/project-overview', parameters: project.toJson());
   }
 }

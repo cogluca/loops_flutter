@@ -31,16 +31,6 @@ class LoginRepository {
 
 
 
-    /**
-     * What am I doing ? I'm generating a service client to then have it available from login to other requests during the course of usage
-     * I have a generic Api Client to generate requests, I need to ask back for Calendar permission and carry on those permissions across the usage
-     * missing holes() GoogleApiClient is a service/utils, then I have true service like the Calendar with operational methods,
-     * I need this client to then send requests to the actual service and retrieve a valid instance of Calendar
-     * For extensibility purposes the Google Api Client should be retrievable from the Get Service Locator
-     * Get doesn't seem accessible from here
-     * Generate Api Client service
-     * Store Api Client onto Service Locator Get
-     */
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
