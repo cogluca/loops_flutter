@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:googleapis/calendar/v3.dart';
+import 'package:loops/error_handling/Failure.dart';
 import 'package:loops/model/Sprint.dart';
 
 import '../model/Task.dart';
@@ -21,12 +23,7 @@ class ProjectRepository {
 
     if (querySnapshotOfSprint.size > 0) {
       querySnapshotOfSprint.docs.forEach((element) {
-        Sprint aRetrievedSprint = Sprint(
-            id: element.id,
-            startDate: element.get('startDate'),
-            endDate: element.get('endDate'),
-            completed: element.get('completed'),
-            listOfTasks: []);
+        Sprint aRetrievedSprint = Sprint.fromSingleJson(element);
         retrievedSprints.add(aRetrievedSprint);
       });
     } else {
@@ -46,23 +43,7 @@ class ProjectRepository {
       if (querySnapshotOfTasks.size > 0) {
         for (var element in querySnapshotOfTasks.docs) {
           if (sprintElement.id == element.get('sprintId')) {
-            Task aRetrievedTask = Task(
-                id: element.id,
-                name: element.get('name'),
-                projectId: element.get('projectId'),
-                epicId: element.get('epicId'),
-                teamId: element.get('teamId'),
-                teamMemberId: element.get('teamMemberId'),
-                startDate: element.get('startDate'),
-                endDate: element.get('endDate'),
-                oneLiner: element.get('oneLiner'),
-                fullDescription: element.get('fullDescription'),
-                sprintId: element.get('sprintId'),
-                storyPoints: element.get('storyPoints'),
-                completed: element.get('completed'),
-                dateCompletion: element.get('dateCompletion'),
-                dateInsertion: element.get('dateInsertion'),
-                order: element.get('order'));
+            Task aRetrievedTask = Task.fromJson(element);
             sprintElement.listOfTasks.add(aRetrievedTask);
           }
         }
@@ -80,7 +61,7 @@ class ProjectRepository {
     List<Task> tasksOfSprint = [];
 
     DocumentSnapshot documentSnapshot =
-        await firestore.collection('sprint').doc(currentSprintId).get();
+        await firestore.collection('sprint').doc(currentSprintId).get().onError((error, stackTrace) => throw Failure('Empty sprint data'));
 
     QuerySnapshot tasksOfSprintSnapshot = await firestore
         .collection('task')
@@ -89,31 +70,13 @@ class ProjectRepository {
 
     if (tasksOfSprintSnapshot.size > 0) {
       tasksOfSprintSnapshot.docs.forEach((element) {
-        Task aRetrievedTask = Task(
-            id: element.id,
-            name: element.get('name'),
-            projectId: element.get('projectId'),
-            epicId: element.get('epicId'),
-            teamId: element.get('teamId'),
-            teamMemberId: element.get('teamMemberId'),
-            startDate: element.get('startDate'),
-            endDate: element.get('endDate'),
-            oneLiner: element.get('oneLiner'),
-            fullDescription: element.get('fullDescription'),
-            sprintId: element.get('sprintId'),
-            storyPoints: element.get('storyPoints'),
-            completed: element.get('completed'),
-            dateCompletion: element.get('dateCompletion'),
-            dateInsertion: element.get('dateInsertion'),
-            order: element.get('order'));
+        Task aRetrievedTask = Task.fromJson(element);
         tasksOfSprint.add(aRetrievedTask);
       });
     }
-    Sprint retrievedSprint = Sprint(
-        startDate: documentSnapshot.get('startDate'),
-        endDate: documentSnapshot.get('endDate'),
-        listOfTasks: tasksOfSprint,
-        completed: documentSnapshot.get('completed'));
+
+    Sprint retrievedSprint = Sprint.fromJson(documentSnapshot);
+    retrievedSprint.listOfTasks = tasksOfSprint;
 
     return retrievedSprint;
   }
@@ -135,14 +98,8 @@ class ProjectRepository {
   }
 
   Future<String> startASprint(
-      String sprintStartDate, String sprintEndDate) async {
-    String sprintId = await firestore.collection('sprint').add({
-      'startDate': sprintStartDate,
-      'endDate': sprintEndDate,
-      'completed': false,
-      'totalStoryPoints': 0,
-      'totalStoryPointsAchieved': 0,
-    }).then((value) => value.id);
+      Sprint startASprint) async {
+    String sprintId = await firestore.collection('sprint').add(startASprint.toJson()).then((value) => value.id);
 
     String projectId = Get.find<GetStorage>().read('choosenProject');
 

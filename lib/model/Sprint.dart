@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,19 +6,16 @@ import 'Task.dart';
 
 class Sprint {
 
+  String _id;
+  String _startDate;
+  String _endDate;
+  int _totalStoryPoints = 0;
+  int _totalStoryPointsAchieved = 0;
+  List<Task> _listOfTasks;
+  bool _completed = false;
 
-  final String? id;
-  final String startDate;
-  final String? endDate;
-  int totalStoryPoints = 0;
-  int totalStoryPointsAchieved = 0;
-  List<Task> listOfTasks;
-  bool? completed = false;
-
-
-  Sprint(
-      {this.id, required this.startDate, required this.endDate, required this.listOfTasks, required this.completed});
-
+  Sprint(this._id, this._startDate, this._endDate, this._listOfTasks,
+      this._completed);
 
   int get getTotalStoryPoints {
     int storyPoints = 0;
@@ -38,24 +36,56 @@ class Sprint {
   }
 
   int get getBurndown {
-
     return getTotalStoryPoints - getTotalStoryPointsAchieved;
-
   }
 
-
-  dynamic toJson() =>
-      {
-        'startDate'
-            : startDate,
+  dynamic toJson() => {
+        'startDate': startDate,
         'endDate': endDate,
         'totalStoryPoints': totalStoryPoints,
         'totalStoryPointsAchieved': totalStoryPointsAchieved
       };
 
+  factory Sprint.fromJson(DocumentSnapshot jsonRetrieved) {
+    return Sprint(
+      jsonRetrieved.id,
+      jsonRetrieved['startDate'],
+      jsonRetrieved['endDate'],
+      [],
+      jsonRetrieved['completed']
+    );
 
+
+  }
+
+  factory Sprint.fromSingleJson(DocumentSnapshot jsonRetrieved) {
+    return Sprint(
+        jsonRetrieved.id,
+        jsonRetrieved['startDate'],
+        jsonRetrieved['endDate'],
+        [],
+        jsonRetrieved['completed']
+    );
+  }
+
+  String get id => _id;
+
+  String get startDate => _startDate;
+
+  String get endDate => _endDate;
+
+  int get totalStoryPoints => _totalStoryPoints;
+
+  int get totalStoryPointsAchieved => _totalStoryPointsAchieved;
+
+  List<Task> get listOfTasks => _listOfTasks;
+
+  bool get completed => _completed;
+
+  set listOfTasks(List<Task> value) {
+    _listOfTasks = value;
+  }
 }
-
 
 //how should I address Sprint - General tasks ? There is an id on tasks referring to Sprint Id
 //should the Sprint model contain a List of Tasks retrieved dynamically ?

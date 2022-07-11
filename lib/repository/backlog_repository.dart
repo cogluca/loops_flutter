@@ -24,23 +24,7 @@ class BacklogRepository {
     if (querySnapshot.size > 0) {
       querySnapshot.docs.forEach((element) {
         if (element.get('completed') != true) {
-          Task singleTask = Task(
-              id: element.id.toString(),
-              name: element.get('name'),
-              projectId: element.get('projectId'),
-              epicId: element.get('epicId'),
-              teamId: element.get('teamId'),
-              teamMemberId: element.get('teamMemberId'),
-              startDate: element.get('startDate'),
-              endDate: element.get('endDate'),
-              oneLiner: element.get('oneLiner'),
-              fullDescription: element.get('fullDescription'),
-              sprintId: element.get('sprintId'),
-              storyPoints: element.get('storyPoints'),
-              completed: element.get('completed'),
-              dateCompletion: element.get('dateCompletion'),
-              dateInsertion: element.get('dateInsertion'),
-              order: element.get('order'));
+          Task singleTask = Task.fromJson(element);
           tasksToReturn.add(singleTask);
         }
       });
@@ -71,23 +55,7 @@ class BacklogRepository {
       querySnapshot.docs.forEach((element) {
         if (element.get('completed') != true) {
           if (sprintId == element.get('sprintId')) {
-            Task singleTask = Task(
-                id: element.id.toString(),
-                name: element.get('name'),
-                projectId: element.get('projectId'),
-                epicId: element.get('epicId'),
-                teamId: element.get('teamId'),
-                teamMemberId: element.get('teamMemberId'),
-                startDate: element.get('startDate'),
-                endDate: element.get('endDate'),
-                oneLiner: element.get('oneLiner'),
-                fullDescription: element.get('fullDescription'),
-                sprintId: element.get('sprintId'),
-                storyPoints: element.get('storyPoints'),
-                completed: element.get('completed'),
-                dateCompletion: element.get('dateCompletion'),
-                dateInsertion: element.get('dateInsertion'),
-                order: element.get('order'));
+            Task singleTask = Task.fromJson(element);
             tasksToReturn.add(singleTask);
           }
           ;

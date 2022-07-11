@@ -45,19 +45,15 @@ class BacklogController extends GetxController {
   void onClose() {}
 
   Future<void> firstTaskListRetrieve() async {
-    String projectId = Get
-        .find<HomeController>()
-        .currentProjectId;
+    String projectId = Get.find<HomeController>().currentProjectId;
 
-    List<Task> computedTasks = await backlogRepository.retrieveCompleteTasks(
-        projectId);
+    List<Task> computedTasks =
+        await backlogRepository.retrieveCompleteTasks(projectId);
     listOfProjectTasks.addAll(computedTasks);
   }
 
   Stream<List<Task>> retrieveTasksOfProject() async* {
-    String projectId = Get
-        .find<HomeController>()
-        .currentProjectId;
+    String projectId = Get.find<HomeController>().currentProjectId;
 
     yield* Stream.periodic(const Duration(seconds: 3), (_) {
       return backlogRepository.retrieveCompleteTasks(projectId);
@@ -65,21 +61,16 @@ class BacklogController extends GetxController {
   }
 
   Stream<List<Task>> retrieveCurrentTasksOfSprint() async* {
-    String projectId = Get
-        .find<HomeController>()
-        .currentProjectId;
+    String projectId = Get.find<HomeController>().currentProjectId;
 
     yield* Stream.periodic(const Duration(seconds: 3), (_) {
       return backlogRepository.retrieveCurrentSprintTasks(projectId);
     }).asyncMap((value) async => await value);
   }
 
-
   Future<void> saveNewlyCreatedTask() async {
     String currentSprintId = "";
-    String projectId = Get
-        .find<HomeController>()
-        .currentProjectId;
+    String projectId = Get.find<HomeController>().currentProjectId;
     int position = Get.find<GetStorage>().read('completeBacklogTasks');
 
     if (assignToSprintState.value == true) {
@@ -87,27 +78,25 @@ class BacklogController extends GetxController {
       position = Get.find<GetStorage>().read('sprintBacklogTasks');
     }
 
-    Task newTask = Task(id: '',
-        name: createdNewTask.text,
-        projectId: projectId,
-        epicId: 'epicId',
-        teamId: 'teamId',
-        teamMemberId: 'teamMemberId',
-        startDate: startDate.text,
-        endDate: endDate.text,
-        oneLiner: oneLiner.text,
-        fullDescription: fullDescription.text,
-        sprintId: currentSprintId,
-        storyPoints: int.parse(storyPoints.text),
-        completed: false,
-        dateCompletion: '',
-        dateInsertion: '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
-        order: position);
+    Task newTask = Task(
+        '',
+        createdNewTask.text,
+        projectId,
+        'epicId',
+        'teamId',
+        'teamMemberId',
+        startDate.text,
+        endDate.text,
+        oneLiner.text,
+        fullDescription.text,
+        currentSprintId,
+        int.parse(storyPoints.text),
+        false,
+        '',
+        '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
+        position);
 
-
-    await
-    backlogRepository.addNewTask(
-        newTask);
+    await backlogRepository.addNewTask(newTask);
   }
 
   Future<void> saveNewTaskPositions(List<Task> reorderedList) async {

@@ -115,6 +115,6 @@ class HomeController extends GetxController {
   void navigateToProjectScreen(String id, String projectName, Project project) {
     writeAndSetProjectIdOnStorage(id, projectName);
     writeProjectCurrentSprint(project.currentSprintId);
-    Get.toNamed('/project-overview', parameters: project.toJson());
+    Get.toNamed('/project-overview', parameters: project.toDynamic());
   }
 }

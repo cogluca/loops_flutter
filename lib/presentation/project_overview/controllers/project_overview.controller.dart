@@ -17,9 +17,7 @@ class ProjectOverviewController extends GetxController {
   RxList<Sprint> currentSprint = RxList<Sprint>([]);
   RxList<Sprint> dataFromSprintsMock = <Sprint>[].obs;
 
-
   ProjectRepository projectRepository = ProjectRepository();
-
 
   TextEditingController sprintStartDate = TextEditingController();
   TextEditingController sprintEndDate = TextEditingController();
@@ -95,7 +93,9 @@ class ProjectOverviewController extends GetxController {
 
   Future<void> startSprint() async {
 
-    await projectRepository.startASprint(sprintStartDate.text, sprintEndDate.text);
+    Sprint sprintStarted = Sprint('', sprintStartDate.text, sprintEndDate.text, [], false);
+
+    await projectRepository.startASprint(sprintStarted);
     String currentSprintId = Get.find<GetStorage>().read('currentProjectSprintId');
     currentSprint.add(await projectRepository.retrieveCurrentSprint(currentSprintId));
 
@@ -142,18 +142,6 @@ class ProjectOverviewController extends GetxController {
 
     return emails;
   }
-
-  //TODO : Refactor into single method these two, and there should be a better way of handling date time
-
-  /**
-  DateTime extractStartDate() {
-    String dateTimeToExtract =
-        meetingDate.text + " " + meetingStartTime.text + ":00";
-    DateTime startDate = DateTime.parse(dateTimeToExtract);
-
-    return startDate;
-  }
-      **/
 
   DateTime extractDate({required String meetingDate, required String meetingTime}) {
     String dateTimeToExtract =

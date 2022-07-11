@@ -50,6 +50,18 @@ class Project {
         jsonProjectData['projectGoal']);
   }
 
+  dynamic toDynamic() => {
+    'id': id.toString(),
+    'name': name.toString(),
+    'oneLiner': oneLiner.toString(),
+    'startDate': startDate.toString(),
+    'endDate': endDate.toString(),
+    'taskCompleted': taskCompleted.toString(),
+    'taskToDo': taskToDo.toString(),
+    'currentSprintId': currentSprintId.toString(),
+    'projectGoal': projectGoal.toString()
+  };
+
   String get id => _id;
 
   String get name => _name;
