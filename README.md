@@ -7,7 +7,7 @@ First iteration of a MVP to handle a simplified Scrum workflow
 - ✅ Connect through Google Meet for video conferencing
 - ✅ See project velocity by comparing Sprints and their relative degree of completion over a graph
 
-## Process of common user paint point discovery
+## Common paint points discovery in organizational tools
 
 Done following the design thinking methodology
 
