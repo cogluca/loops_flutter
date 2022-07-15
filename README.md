@@ -14,14 +14,14 @@ Done following the design thinking methodology
 - Initial phase of topic skimming through different resources and the official Scrum guide
 - Analysis of secondary research over common workflows and pain points
 - Primary research with restricted population samples
-- Initial development of Graphic Prototypes to reduce initial mistakes and iterations over each new discovery
+- Initial development of graphical Prototypes to reduce initial mistakes and iterations over each new discovery
+  ![Graphical mock files](./static_resources/graphical_prototypes.png)
 - Development of an affinity diagram related to different problems sampled
   ![Affinity diagram](./static_resources/affinity_diagram.png)
 
 ## Initial proposed architecture draft
-
+  Following an MVC pattern with Repository pattern for Firebase Services and an layer (Calendar Client) for the GCP Meet-Calendar service.
   ![Architecture](./static_resources/proposed_reviewed_architecture.png)
-
 
 ## Instructions to run
 
