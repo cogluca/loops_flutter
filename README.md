@@ -20,7 +20,7 @@ Done following the design thinking methodology
 
 ## Initial proposed architecture draft
 
-  ![Architecture](./static_resources/proposed_architecture.png)
+  ![Architecture](./static_resources/proposed_reviewed_architecture.png)
 
 
 ## Instructions to run
