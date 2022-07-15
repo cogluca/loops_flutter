@@ -25,7 +25,7 @@ Done following the design thinking methodology
   ![Affinity diagram](./static_resources/affinity_diagram.png)
 
 ### Initially proposed architecture draft
-  Following an MVC pattern with Repository pattern for Firebase Services and an layer (Calendar Client) for the GCP Meet-Calendar service.
+  Following an MVC pattern with Repository pattern for Firebase Services and an extra layer (Calendar Client) for the GCP Meet-Calendar service.
   ![Architecture](./static_resources/proposed_reviewed_architecture.png)
 
 
