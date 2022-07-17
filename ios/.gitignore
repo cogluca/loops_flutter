@@ -36,3 +36,4 @@ Runner/GeneratedPluginRegistrant.*
 #Service files
 
 Runner.xcworkspace/GoogleService-Info.plist
+Runner/GoogleService-Info.plist
