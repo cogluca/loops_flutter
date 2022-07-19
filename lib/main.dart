@@ -6,7 +6,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:loops/navigation_infrastructure/navigation/bindings/controllers/controllers_bindings.dart';
 import 'package:loops/navigation_infrastructure/navigation/navigation.dart';
 import 'package:loops/presentation/login/login.screen.dart';
-import 'package:loops/secrets.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'services/calendar_client.dart';
 import 'firebase_options.dart';
