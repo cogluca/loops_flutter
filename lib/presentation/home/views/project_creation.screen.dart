@@ -53,7 +53,7 @@ class ProjectCreationScreen extends GetView<HomeController> {
                       firstDate: DateTime.now(),
                       lastDate: DateTime.utc(2025));
                   controller.newStartDate.text =
-                      '${pickedDate?.year}-${pickedDate?.month}-${pickedDate?.day}';
+                  '${pickedDate?.year}-${pickedDate?.month}-${pickedDate?.day}';
                 },
               ),
               padding: const EdgeInsets.all(8.0),

@@ -20,7 +20,6 @@ class LoginScreen extends GetView<LoginController> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-
               ElevatedButton(
                   child: const Text('Login with Google',
                       style: TextStyle(fontSize: 20)),
