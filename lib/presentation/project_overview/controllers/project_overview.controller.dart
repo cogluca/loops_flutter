@@ -52,14 +52,17 @@ class ProjectOverviewController extends GetxController {
   }
 
   Stream<List<Sprint>> retrieveSprints() async* {
-    List<Sprint> retrievedSprints = await projectRepository.retrieveSprint();
+
+    String projectId = getStorage.read('choosenProject');
+
+    List<Sprint> retrievedSprints = await projectRepository.retrieveSprint(projectId: projectId);
 
     dataFromSprints.assignAll(retrievedSprints);
 
     update();
 
     yield* Stream.periodic(const Duration(seconds: 3), (_) {
-      return projectRepository.retrieveSprint();
+      return projectRepository.retrieveSprint(projectId: projectId);
     }).asyncMap((value) async => await value);
 
     update();
@@ -93,7 +96,9 @@ class ProjectOverviewController extends GetxController {
 
   Future<void> startSprint() async {
 
-    Sprint sprintStarted = Sprint('', sprintStartDate.text, sprintEndDate.text, [], false);
+    String projectId = getStorage.read('choosenProject');
+
+    Sprint sprintStarted = Sprint('', sprintStartDate.text, sprintEndDate.text, [], false, projectId);
 
     await projectRepository.startASprint(sprintStarted);
     String currentSprintId = Get.find<GetStorage>().read('currentProjectSprintId');

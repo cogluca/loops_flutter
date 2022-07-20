@@ -20,11 +20,28 @@ class LandscapeMode extends GetView<ProjectOverviewController> {
             builder: (BuildContext context,
                 AsyncSnapshot<List<Sprint>> dataSnapshot) {
               if (dataSnapshot.connectionState != ConnectionState.waiting) {
-                return Card(
-                    child: SingleChildScrollView(
-                        controller: AdjustableScrollController(200),
-                        scrollDirection: Axis.horizontal,
-                        child: BarChartSample2(dataSnapshot.data!)));
+                if (!dataSnapshot.hasData) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'No Sprints currently active, start one !',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Icon(
+                        Icons.warning_amber_rounded,
+                        size: 50,
+                        color: Colors.amber,
+                      )
+                    ],
+                  );
+                } else {
+                  return Card(
+                      child: SingleChildScrollView(
+                          controller: AdjustableScrollController(200),
+                          scrollDirection: Axis.horizontal,
+                          child: BarChartSample2(dataSnapshot.data!)));
+                }
               } else {
                 return const Center(
                   child: CircularProgressIndicator(),

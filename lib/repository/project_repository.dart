@@ -13,13 +13,13 @@ import '../services/calendar_client.dart';
 class ProjectRepository {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<List<Sprint>> retrieveSprint() async {
+  Future<List<Sprint>> retrieveSprint({required String projectId}) async {
     List<Sprint> retrievedSprints = [];
 
     //TODO Nested api calls seems the worst shit that I could possibly do, really not concentrated, get the blob sort it by myself, unload complexity from network to a minimal computation on repository, minimum sorting ?
 
     QuerySnapshot querySnapshotOfSprint =
-        await firestore.collection('sprint').get();
+        await firestore.collection('sprint').where('projectId', isEqualTo: projectId).get();
 
     if (querySnapshotOfSprint.size > 0) {
       querySnapshotOfSprint.docs.forEach((element) {

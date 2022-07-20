@@ -9,13 +9,17 @@ class Sprint {
   String _id;
   String _startDate;
   String _endDate;
+  String _projectId;
+
+
+
   int _totalStoryPoints = 0;
+
   int _totalStoryPointsAchieved = 0;
   List<Task> _listOfTasks;
   bool _completed = false;
-
   Sprint(this._id, this._startDate, this._endDate, this._listOfTasks,
-      this._completed);
+      this._completed, this._projectId);
 
   int get getTotalStoryPoints {
     int storyPoints = 0;
@@ -42,8 +46,10 @@ class Sprint {
   dynamic toJson() => {
         'startDate': startDate,
         'endDate': endDate,
+        'completed': completed,
         'totalStoryPoints': totalStoryPoints,
-        'totalStoryPointsAchieved': totalStoryPointsAchieved
+        'totalStoryPointsAchieved': totalStoryPointsAchieved,
+        'projectId': projectId
       };
 
   factory Sprint.fromJson(DocumentSnapshot jsonRetrieved) {
@@ -52,7 +58,8 @@ class Sprint {
       jsonRetrieved['startDate'],
       jsonRetrieved['endDate'],
       [],
-      jsonRetrieved['completed']
+      jsonRetrieved['completed'],
+      jsonRetrieved['projectId']
     );
 
 
@@ -64,7 +71,8 @@ class Sprint {
         jsonRetrieved['startDate'],
         jsonRetrieved['endDate'],
         [],
-        jsonRetrieved['completed']
+        jsonRetrieved['completed'],
+      jsonRetrieved['projectId']
     );
   }
 
@@ -84,6 +92,12 @@ class Sprint {
 
   set listOfTasks(List<Task> value) {
     _listOfTasks = value;
+  }
+
+  String get projectId => _projectId;
+
+  set projectId(String value) {
+    _projectId = value;
   }
 }
 
