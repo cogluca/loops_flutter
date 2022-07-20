@@ -20,6 +20,7 @@ class BacklogScreen extends GetView<BacklogController> {
     Get.find<GetStorage>().write('taskLongPressed', false);
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       key: _scaffoldKey,
       appBar: AppBar(
           title: const Text('Backlog'),

@@ -11,4 +11,5 @@ class Routes {
   static const TIMELINE = '/timeline';
   static const PROJECT_OVERVIEW = '/project-overview';
   static const TASK_VIEW = '/task_creation';
+  static const PROJECT_CREATION = '/project_creation';
 }

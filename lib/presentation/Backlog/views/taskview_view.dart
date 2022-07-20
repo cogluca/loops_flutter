@@ -7,6 +7,7 @@ class TaskviewView extends GetView<BacklogController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Task Creation'),
         centerTitle: true,
@@ -14,6 +15,7 @@ class TaskviewView extends GetView<BacklogController> {
       body: Column(
         children: [
           const Padding(padding: EdgeInsets.only(top: 35)),
+          
           Container(
             child: TextFormField(
               decoration: const InputDecoration(

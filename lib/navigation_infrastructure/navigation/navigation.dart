@@ -35,6 +35,10 @@ class Nav {
     GetPage(
         name: Routes.TASK_VIEW,
         page: () => TaskviewView(),
-        binding: TaskViewBinding())
+        binding: TaskViewBinding()),
+    GetPage(
+        name: Routes.PROJECT_CREATION,
+        page: () => ProjectCreationScreen(),
+        binding: HomeControllerBinding())
   ];
 }

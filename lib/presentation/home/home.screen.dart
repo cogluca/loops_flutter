@@ -103,87 +103,8 @@ class HomeScreen extends GetView<HomeController> {
                   }))
         ]),
         floatingActionButton: FloatingActionButton(
-            onPressed: () => {
-                  showDialog(
-                    builder: (BuildContext context) {
-                      return Dialog(
-                          child: Column(
-                        children: [
-                          Container(
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: 'Project name',
-                                hintText: 'Enter project name',
-                                border: OutlineInputBorder(),
-                              ),
-                              controller: homeController.createdNewProject,
-                            ),
-                            padding: const EdgeInsets.all(8.0),
-                          ),
-                          Container(
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: 'Project shortDescription',
-                                hintText: 'Enter project name',
-                                border: OutlineInputBorder(),
-                              ),
-                              controller: homeController.oneLiner,
-                            ),
-                            padding: const EdgeInsets.all(8.0),
-                          ),
-                          Container(
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: 'Project goal',
-                                hintText: 'Enter project name',
-                                border: OutlineInputBorder(),
-                              ),
-                              controller: homeController.projectGoal,
-                            ),
-                            padding: const EdgeInsets.all(8.0),
-                          ),
-                          Container(
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: 'When will the project start ?',
-                                hintText: 'dd/mm/yyyy',
-                                border: OutlineInputBorder(),
-                              ),
-                              controller: controller.newStartDate,
-                            ),
-                            padding: const EdgeInsets.all(8.0),
-                          ),
-                          Container(
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: 'When will the project start ?',
-                                hintText: 'dd/mm/yyyy',
-                                border: OutlineInputBorder(),
-                              ),
-                              controller: controller.newEndDate,
-                            ),
-                            padding: const EdgeInsets.all(8.0),
-                          ),
-                          Row(
-                            children: [
-                              TextButton(
-                                  onPressed: () => {
-                                        controller.saveNewlyCreatedProject(),
-                                        Navigator.pop(context)
-                                      },
-                                  child: const Text('Create Project')),
-                              TextButton(
-                                  onPressed: () => {Navigator.pop(context)},
-                                  child: const Text('Cancel'))
-                            ],
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          )
-                        ],
-                      ));
-                    },
-                    context: context,
-                  )
-                },
+            onPressed: () => Get.toNamed('/project_creation'),
+
             child: const Icon(Icons.add)));
   }
 }
