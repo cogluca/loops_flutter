@@ -44,6 +44,7 @@ class BacklogController extends GetxController {
   @override
   void onClose() {}
 
+  ///Does first fast retrieve of tasks belonging to a project for initial display
   Future<void> firstTaskListRetrieve() async {
     String projectId = Get.find<HomeController>().currentProjectId;
 
@@ -52,6 +53,8 @@ class BacklogController extends GetxController {
     listOfProjectTasks.addAll(computedTasks);
   }
 
+  ///Retrieves a list of tasks through a stream method by calling a [retrieveCompleteTasks] method belonging to the backlog repository.
+  ///Returns such Stream to the caller
   Stream<List<Task>> retrieveTasksOfProject() async* {
     String projectId = Get.find<HomeController>().currentProjectId;
 
@@ -60,6 +63,8 @@ class BacklogController extends GetxController {
     }).asyncMap((value) async => await value);
   }
 
+  ///Retrieves a list of tasks belonging to the current Sprint through a stream method by calling a [retrieveCurrentTasksOfSprint] method belonging to the backlog repository.
+  ///Returns such Stream to the caller
   Stream<List<Task>> retrieveCurrentTasksOfSprint() async* {
     String projectId = Get.find<HomeController>().currentProjectId;
 
@@ -68,6 +73,8 @@ class BacklogController extends GetxController {
     }).asyncMap((value) async => await value);
   }
 
+  /// Saves a newly created task by retrieving from text controllers, local storage its instance variables, incapsulates them into a task and calls on the
+  /// repository method relative to the task
   Future<void> saveNewlyCreatedTask() async {
     String currentSprintId = "";
     String projectId = Get.find<HomeController>().currentProjectId;
@@ -99,22 +106,26 @@ class BacklogController extends GetxController {
     await backlogRepository.addNewTask(newTask);
   }
 
+  ///Saves the new task positioning
   Future<void> saveNewTaskPositions(List<Task> reorderedList) async {
     await backlogRepository.reorderTasks(reorderedList);
   }
 
+  ///Marks a task as complete
   Future<void> markTaskAsCompleted(String taskId) async {
     await backlogRepository.markTaskAsCompleted(taskId);
   }
 
+  ///Deletes a task
   Future<void> deleteTask(String taskId) async {
     await backlogRepository.deleteTask(taskId);
   }
 
+  ///Sends an invite to collaborate by retrieving from text controllers, boolean choices and enumerators the necessary data, calls the relative repository method handling such case
   Future<void> sendGoogleMeetInvite() async {
     List<String> attendants = extractEmailsFromString();
-    DateTime meetingStartsAt = extractStartDate();
-    DateTime meetingEndsAt = extractEndDate();
+    DateTime meetingStartsAt = extractDate(meetingDate: meetingDate.text, meetingTime: meetingStartTime.text);
+    DateTime meetingEndsAt = extractDate(meetingDate: meetingDate.text, meetingTime: meetingEndTime.text);
     String location = locationOfMeeting.text;
     bool conferenceSupport = conferenceSupportState.value;
     bool notifyAttendants = notifyAttendantsState.value;
@@ -134,6 +145,7 @@ class BacklogController extends GetxController {
         meetingEnding: meetingEndsAt);
   }
 
+  ///extracts email addressed from string and stores them in [emails]
   List<String> extractEmailsFromString() {
     String emailsToParse = emailsOnForm.text;
 
@@ -150,17 +162,10 @@ class BacklogController extends GetxController {
     return emails;
   }
 
-  DateTime extractStartDate() {
-    String dateTimeToExtract =
-        meetingDate.text + " " + meetingStartTime.text + ":00";
-    DateTime startDate = DateTime.parse(dateTimeToExtract);
-
-    return startDate;
-  }
-
-  DateTime extractEndDate() {
-    String dateTimeToExtract =
-        meetingDate.text + " " + meetingEndTime.text + ":00";
+  ///Manipulates and combines [meetingDate] and [meetingTime] into a format that the underlying Calendar Client can understand
+  DateTime extractDate(
+      {required String meetingDate, required String meetingTime}) {
+    String dateTimeToExtract = meetingDate + " " + meetingTime + ":00";
     DateTime endDate = DateTime.parse(dateTimeToExtract);
 
     return endDate;
