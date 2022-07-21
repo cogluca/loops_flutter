@@ -4,7 +4,7 @@ import 'package:flutter/scheduler.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:loops/presentation/Backlog/components/TaskTile.dart';
+import 'package:loops/presentation/Backlog/components/task_tile.dart';
 import 'package:loops/presentation/general_components/left_drag_drawer.dart';
 import 'package:loops/presentation/general_components/task_creation_dialog.dart';
 import 'package:loops/presentation/project_overview/components/meet_dialog.dart';

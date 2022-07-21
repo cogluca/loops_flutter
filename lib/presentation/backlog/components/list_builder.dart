@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../model/Task.dart';
-import '../../Backlog/components/TaskTile.dart';
+import '../../Backlog/components/task_tile.dart';
 import '../controllers/backlog.controller.dart';
 
 class ListBuilder extends GetView<BacklogController> {
