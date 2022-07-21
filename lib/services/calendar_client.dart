@@ -8,6 +8,8 @@ class CalendarClient {
    CalendarClient({required this.calendar});
 
 
+   ///Creates an Event object with the function parameters, specifies according to [hasConferenceSupport] the Conference Request, specifies the timing and subsequently inserts the event
+  ///on the attendees' calendar with relative links to Google Meet if [hasConferenceSupport] is present as true
   Future<Map<String, String>> insert({
     required String title,
     required String description,

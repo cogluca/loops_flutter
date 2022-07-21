@@ -3,6 +3,7 @@ import 'package:http/io_client.dart';
 
 
 
+///Client to interface with google sign in process
 class GoogleAPIClient extends IOClient {
   Map<String, String> _headers;
 
