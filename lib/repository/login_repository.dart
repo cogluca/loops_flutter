@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 class LoginRepository {
   final FirebaseFirestore authApi = FirebaseFirestore.instance;
 
+  ///signs in with email and password
   Future<UserCredential> verifyUser(
       {required String email, required String password}) async {
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -19,6 +20,7 @@ class LoginRepository {
         email: email, password: password);
   }
 
+  ///Signs in through google and includes calendar access permissions on the app
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn(
@@ -28,8 +30,6 @@ class LoginRepository {
     final authHeaders = await googleUser!.authHeaders;
 
     //service utils onto Service locator, will have to worry about extensive coupling later
-
-
 
 
     // Obtain the auth details from the request
@@ -47,7 +47,6 @@ class LoginRepository {
         await FirebaseAuth.instance.signInWithCredential(credential);
 
 
-
     GoogleAPIClient httpClient = GoogleAPIClient(authHeaders);
 
     final cal.CalendarApi calendarApi = cal.CalendarApi(httpClient);
@@ -61,6 +60,7 @@ class LoginRepository {
     return signedInUser;
   }
 
+  ///Signs out by destroying the user authentication instance on firebase
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }

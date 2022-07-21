@@ -13,6 +13,8 @@ import '../services/calendar_client.dart';
 class ProjectRepository {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  ///Retrieves and populates sprints relative to the Project that [projectId] references, first it retrieves the sprints deserializing them onto Sprint objects, then populates those sprints with
+  ///their relative tasks, adds those Sprints to a list [retrievedSprints] and returns it incapsulated in a Future (because the method is asynchronous)
   Future<List<Sprint>> retrieveSprint({required String projectId}) async {
     List<Sprint> retrievedSprints = [];
 
@@ -53,10 +55,12 @@ class ProjectRepository {
     return retrievedSprints;
   }
 
+  ///Saves a new Sprint passed as argument [sprintToAdd] to the firestore storage
   Future<void> addNewSprint(Sprint sprintToAdd) async {
     await firestore.collection('sprint').add(sprintToAdd.toJson());
   }
 
+  ///Retrieves the current sprint according to the current Project document, retrieves each task belonging to the Sprint, recreates the object [retrievedSprint] and returns it
   Future<Sprint> retrieveCurrentSprint(String currentSprintId) async {
     List<Task> tasksOfSprint = [];
 
@@ -81,6 +85,7 @@ class ProjectRepository {
     return retrievedSprint;
   }
 
+  ///Prematurely or not sets a Sprint to completed and removes its reference from Project
   Future<void> turnSprintOff() async {
     String projectId = Get.find<GetStorage>().read('choosenProject');
     String sprintId = Get.find<GetStorage>().read('currentProjectSprintId');
@@ -97,6 +102,8 @@ class ProjectRepository {
     Get.find<GetStorage>().write('currentProjectSprintId', 'none');
   }
 
+  ///Starts a Sprint by adding the Sprint passed as parameter [startASprint], updates reference to current sprint on local storage and updates the current Project currentSprint field with the sprint id
+  ///retrieved from previous call to firestore
   Future<String> startASprint(
       Sprint startASprint) async {
     String sprintId = await firestore.collection('sprint').add(startASprint.toJson()).then((value) => value.id);
@@ -112,6 +119,7 @@ class ProjectRepository {
     return sprintId;
   }
 
+  ///Sends to [CalendarClient] the relative information to schedule a Calendar element on attendees specified on the form
   Future<void> sendMeetingInvite(
       {required String meetingTitle,
       required String meetingDescription,
