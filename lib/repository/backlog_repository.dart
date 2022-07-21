@@ -9,6 +9,7 @@ import 'package:loops/services/calendar_client.dart';
 class BacklogRepository {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  ///Retrieves the complete backlog tasks of a specific project referenced by [projectId] and sorts them according to the order field on each task
   Future<List<Task>> retrieveCompleteTasks(String projectId) async {
     List<Task> tasksToReturn = <Task>[];
 
@@ -39,6 +40,7 @@ class BacklogRepository {
     return tasksToReturn;
   }
 
+  ///Retrieves current sprint tasks and sorts them according to order
   Future<List<Task>> retrieveCurrentSprintTasks(String projectId) async {
     List<Task> tasksToReturn = <Task>[];
 
@@ -74,13 +76,14 @@ class BacklogRepository {
 
   Future<void> orderTasks() async {}
 
-  //this is something that could be passed as an object, the Repository shouldn't be bothered by an objects internals
+  ///Adds a new task passed as argument to the task collection on the database
   Future<void> addNewTask(Task toInsertTask) async {
     firestore.collection('task').add(toInsertTask.toJson()).onError(
         (error, stackTrace) =>
             throw Failure('There was an error adding new Task onto database'));
   }
 
+  ///Reorders tasks passed as argument by first defining its order parameter according to Ui rendered list and order, then updates each task's order field on the database
   Future<void> reorderTasks(List<Task> reorderedList) async {
     int position = 0;
     reorderedList.forEach((element) {
@@ -96,6 +99,7 @@ class BacklogRepository {
     }
   }
 
+  ///Marks task referred by [taskId] parameter as completed by updating field completed to true and inserting the completion date
   Future<void> markTaskAsCompleted(String taskId) async {
     await firestore.collection('task').doc(taskId).update({
       'completed': true,
@@ -105,12 +109,14 @@ class BacklogRepository {
         throw Failure('There was an error while marking task as completed'));
   }
 
+  ///Deletes task referred by [taskId] parameter
   Future<void> deleteTask(String taskId) async {
     await firestore.collection('task').doc(taskId).delete().onError(
         (error, stackTrace) =>
             throw Failure('There was a problem deleting the task'));
   }
 
+  ///Sends to [CalendarClient] the relative information to schedule a Calendar element on attendees specified on the form
   Future<void> sendMeetingInvite(
       {required String meetingTitle,
       required String meetingDescription,
