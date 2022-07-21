@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.loops">
+    package="com.first.loops">
    <application
         android:label="loops"
         android:name="${applicationName}"

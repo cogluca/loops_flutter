@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 
 import '../../../model/Sprint.dart';
 
-class BarChartSample2 extends StatefulWidget {
+class VelocityGraph extends StatefulWidget {
   List<Sprint> dataFromSprints;
 
-  BarChartSample2(List<Sprint> value, {Key? key })
+  VelocityGraph(List<Sprint> value, {Key? key })
       : dataFromSprints = value,
         super(key: key);
 
   @override
-  State<StatefulWidget> createState() => BarChartSample2State();
+  State<StatefulWidget> createState() => VelocityGraphState();
 }
 
-class BarChartSample2State extends State<BarChartSample2> {
+class VelocityGraphState extends State<VelocityGraph> {
   final Color leftBarColor = const Color(0xff53fdd7);
   final Color rightBarColor = const Color(0xffff5182);
   final double width = 7;

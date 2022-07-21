@@ -21,6 +21,8 @@ import 'controllers/project_overview.controller.dart';
 class ProjectOverviewScreen extends GetView<ProjectOverviewController> {
   dynamic projectData = Get.parameters;
 
+  static final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     Map projectArgument = Get.parameters;
@@ -29,7 +31,7 @@ class ProjectOverviewScreen extends GetView<ProjectOverviewController> {
     Get.find<GetStorage>().write('projectGoal', projectData['projectGoal']);
 
     String projectName = Get.find<GetStorage>().read('choosenProjectName');
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 
     return Scaffold(
       key: _scaffoldKey,

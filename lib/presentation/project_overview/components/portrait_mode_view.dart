@@ -32,7 +32,7 @@ class PortraitMode extends GetView<ProjectOverviewController> {
                       return Card(
                           child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
-                              child: BarChartSample2(dataSnapshot.data!)));
+                              child: VelocityGraph(dataSnapshot.data!)));
                     }
                   } else {
                     return const Center(child: CircularProgressIndicator());

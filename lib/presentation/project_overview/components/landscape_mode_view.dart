@@ -40,7 +40,7 @@ class LandscapeMode extends GetView<ProjectOverviewController> {
                       child: SingleChildScrollView(
                           controller: AdjustableScrollController(200),
                           scrollDirection: Axis.horizontal,
-                          child: BarChartSample2(dataSnapshot.data!)));
+                          child: VelocityGraph(dataSnapshot.data!)));
                 }
               } else {
                 return const Center(

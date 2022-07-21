@@ -37,41 +37,42 @@ class MeetDialog extends GetView<ProjectOverviewController> {
               )),
           padding: const EdgeInsets.only(left: 20.0, top: 20),
         ),
-        Container(
-          child: TextFormField(
-            decoration: const InputDecoration(
-              labelText: 'What date does the meeting happen ?',
-              hintText: 'yyyy/mm/dd',
-              border: OutlineInputBorder(),
-            ),
-            controller: controller.meetingDate,
-            onTap: () async {
-              String pickedMonth = '';
-              String pickedDay = '';
-              DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime.utc(2050));
-              pickedMonth = pickedDate!.month.toString();
-              pickedDay = pickedDate!.day.toString();
-              if (pickedMonth.length > 1) {
-                controller.meetingDate.text =
-                    '${pickedDate.year}-${pickedDate.month}-';
-              } else {
-                controller.meetingDate.text =
-                    '${pickedDate.year}-0${pickedDate.month}-';
-              }
-              if(pickedDay.length > 1){
-                controller.meetingDate.text += '${pickedDate.day}';
-              }
-              else{
-                controller.meetingDate.text += '0${pickedDate.day}';
-              }
-            },
-          ),
-          padding: const EdgeInsets.all(8.0),
-        ),
+        FocusScope(
+            node: FocusScopeNode(),
+            child: Container(
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'What date does the meeting happen ?',
+                  hintText: 'yyyy/mm/dd',
+                  border: OutlineInputBorder(),
+                ),
+                controller: controller.meetingDate,
+                onTap: () async {
+                  String pickedMonth = '';
+                  String pickedDay = '';
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.utc(2050));
+                  pickedMonth = pickedDate!.month.toString();
+                  pickedDay = pickedDate!.day.toString();
+                  if (pickedMonth.length > 1) {
+                    controller.meetingDate.text =
+                        '${pickedDate.year}-${pickedDate.month}-';
+                  } else {
+                    controller.meetingDate.text =
+                        '${pickedDate.year}-0${pickedDate.month}-';
+                  }
+                  if (pickedDay.length > 1) {
+                    controller.meetingDate.text += '${pickedDate.day}';
+                  } else {
+                    controller.meetingDate.text += '0${pickedDate.day}';
+                  }
+                },
+              ),
+              padding: const EdgeInsets.all(8.0),
+            )),
         Container(
           child: TextFormField(
             decoration: const InputDecoration(
@@ -89,19 +90,15 @@ class MeetDialog extends GetView<ProjectOverviewController> {
               hourOfTimePicked = timePicked!.hour.toString();
               minuteOfTimePicked = timePicked.minute.toString();
               if (hourOfTimePicked.length > 1) {
-                controller.meetingStartTime.text =
-                    '${timePicked.hour}:';
+                controller.meetingStartTime.text = '${timePicked.hour}:';
               } else {
-                controller.meetingStartTime.text =
-                    '0${timePicked.hour}:';
+                controller.meetingStartTime.text = '0${timePicked.hour}:';
               }
-              if(minuteOfTimePicked.length > 1){
+              if (minuteOfTimePicked.length > 1) {
                 controller.meetingStartTime.text += minuteOfTimePicked;
-              }
-              else{
+              } else {
                 controller.meetingStartTime.text += '0$minuteOfTimePicked';
               }
-
             },
           ),
           padding: const EdgeInsets.all(8.0),
@@ -119,28 +116,26 @@ class MeetDialog extends GetView<ProjectOverviewController> {
               String hourOfTimePicked = '';
               String minuteOfTimePicked = '';
               TimeOfDay? timePicked =
-              await showTimePicker(context: context, initialTime: timenow);
+                  await showTimePicker(context: context, initialTime: timenow);
               hourOfTimePicked = timePicked!.hour.toString();
               minuteOfTimePicked = timePicked.minute.toString();
               if (hourOfTimePicked.length > 1) {
-                controller.meetingEndTime.text =
-                '${timePicked.hour}:';
+                controller.meetingEndTime.text = '${timePicked.hour}:';
               } else {
-                controller.meetingEndTime.text =
-                '0${timePicked.hour}:';
+                controller.meetingEndTime.text = '0${timePicked.hour}:';
               }
-              if(minuteOfTimePicked.length > 1){
+              if (minuteOfTimePicked.length > 1) {
                 controller.meetingEndTime.text += minuteOfTimePicked;
-              }
-              else{
+              } else {
                 controller.meetingEndTime.text += '0$minuteOfTimePicked';
               }
-
             },
           ),
           padding: const EdgeInsets.all(8.0),
         ),
-        Container(
+        FocusScope(
+          node: FocusScopeNode(),
+            child: Container(
           child: TextFormField(
             decoration: const InputDecoration(
               labelText: 'Who will participate ?',
@@ -150,7 +145,7 @@ class MeetDialog extends GetView<ProjectOverviewController> {
             controller: controller.emailsOnForm,
           ),
           padding: const EdgeInsets.all(8.0),
-        ),
+        )),
         Container(
           child: TextFormField(
             decoration: const InputDecoration(
