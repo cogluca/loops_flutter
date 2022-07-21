@@ -51,11 +51,15 @@ class ProjectOverviewController extends GetxController {
     screenTitle = getStorage.read('choosenProjectName');
   }
 
-  Stream<List<Sprint>> retrieveSprints() async* {
+  ///Retrieves a list of Sprint objects that comprise their underlying tasks
+  ///Returns a Stream of type List<Sprint>
+  ///Subsequently updates the observable value which in turn notifies the observes UI component
 
+  Stream<List<Sprint>> retrieveSprints() async* {
     String projectId = getStorage.read('choosenProject');
 
-    List<Sprint> retrievedSprints = await projectRepository.retrieveSprint(projectId: projectId);
+    List<Sprint> retrievedSprints =
+        await projectRepository.retrieveSprint(projectId: projectId);
 
     dataFromSprints.assignAll(retrievedSprints);
 
@@ -68,51 +72,58 @@ class ProjectOverviewController extends GetxController {
     update();
   }
 
-  Future<void> retrieveCurrentSprint() async {
+  /// Retrieves Sprint object according to which one a local storage state manager defines as current
+  /// Subsequently updates the observable value [currentSprint] which in turn notifies the observes UI component through the [update] method
 
+  Future<void> retrieveCurrentSprint() async {
     String currentSprintId = '';
     late Sprint retrievedSprint;
 
-    currentSprintId =
-        Get.find<GetStorage>().read('currentProjectSprintId');
+    currentSprintId = Get.find<GetStorage>().read('currentProjectSprintId');
 
-    if(currentSprintId != '' || currentSprintId != null) {
+    if (currentSprintId != '' || currentSprintId != null) {
       retrievedSprint =
-      await projectRepository.retrieveCurrentSprint(currentSprintId);
+          await projectRepository.retrieveCurrentSprint(currentSprintId);
     }
     currentSprint.add(retrievedSprint);
 
     update();
   }
 
+  ///Deactives current sprint, this can mean semantically both having a sprint finished or ending it prematurely, through repository call updates the storage contained sprint document value
+  ///to completed
+  ///Subsequently notifies and updates the UI component listening to the [currentSprint] variable
   Future<void> turnSprintOff() async {
-
     await projectRepository.turnSprintOff();
     currentSprint.clear();
 
     update();
-
   }
 
+  ///Starts a sprint, meaning constructs the object from text controllers, default values and local storage and calls the repository method to create a document in the storage with
+  ///such data
   Future<void> startSprint() async {
-
     String projectId = getStorage.read('choosenProject');
 
-    Sprint sprintStarted = Sprint('', sprintStartDate.text, sprintEndDate.text, [], false, projectId);
+    Sprint sprintStarted = Sprint(
+        '', sprintStartDate.text, sprintEndDate.text, [], false, projectId);
 
     await projectRepository.startASprint(sprintStarted);
-    String currentSprintId = Get.find<GetStorage>().read('currentProjectSprintId');
-    currentSprint.add(await projectRepository.retrieveCurrentSprint(currentSprintId));
+    String currentSprintId =
+        Get.find<GetStorage>().read('currentProjectSprintId');
+    currentSprint
+        .add(await projectRepository.retrieveCurrentSprint(currentSprintId));
 
     update();
   }
 
+  ///Sends an invite to collaborate by retrieving from text controllers, boolean choices and enumerators the necessary data, calls the relative repository method handling such case
   Future<void> sendGoogleMeetInvite() async {
-
-
     List<String> attendants = extractEmailsFromString();
-    DateTime meetingStartsAt = extractDate(meetingDate: meetingDate.text, meetingTime: meetingStartTime.text);
-    DateTime meetingEndsAt = extractDate(meetingDate: meetingDate.text, meetingTime: meetingEndTime.text);
+    DateTime meetingStartsAt = extractDate(
+        meetingDate: meetingDate.text, meetingTime: meetingStartTime.text);
+    DateTime meetingEndsAt = extractDate(
+        meetingDate: meetingDate.text, meetingTime: meetingEndTime.text);
     String location = locationOfMeeting.text;
     bool conferenceSupport = conferenceSupportState.value;
     bool notifyAttendants = notifyAttendantsState.value;
@@ -132,6 +143,7 @@ class ProjectOverviewController extends GetxController {
         meetingEnding: meetingEndsAt);
   }
 
+  ///extracts email addressed from string and stores them in [emails]
   List<String> extractEmailsFromString() {
     String emailsToParse = emailsOnForm.text;
 
@@ -148,12 +160,12 @@ class ProjectOverviewController extends GetxController {
     return emails;
   }
 
-  DateTime extractDate({required String meetingDate, required String meetingTime}) {
-    String dateTimeToExtract =
-        meetingDate + " " + meetingTime + ":00";
+  ///Manipulates and combines [meetingDate] and [meetingTime] into a format that the underlying Calendar Client can understand
+  DateTime extractDate(
+      {required String meetingDate, required String meetingTime}) {
+    String dateTimeToExtract = meetingDate + " " + meetingTime + ":00";
     DateTime endDate = DateTime.parse(dateTimeToExtract);
 
     return endDate;
   }
-
 }
