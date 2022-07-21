@@ -5,6 +5,7 @@ import 'package:loops/model/Project.dart';
 class HomeRepository {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  ///Gets projects from database through asynchronous call and iterates on result to serialize them from the retrieved json onto Project models
   Future<List<Project>> getProjects() async {
     late List<Project> dataRef = <Project>[];
     late Project singleProject;
@@ -28,6 +29,7 @@ class HomeRepository {
     //Controller passes them onto a ListView builder and the ListView builder in the widgets renders the projects
   }
 
+  ///Saves a newly created project aggregated on the controlled and passed as argument [projectToBeSaved]
   Future<void> saveNewlyCreatedProject(
       {required Project projectToBeSaved}) async {
     await firestore
