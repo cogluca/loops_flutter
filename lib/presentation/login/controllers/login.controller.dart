@@ -8,7 +8,6 @@ import 'package:loops/model/AppUser.dart';
 import 'package:loops/repository/login_repository.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
 
   LoginRepository loginRepository = LoginRepository();
   GetStorage storage = GetStorage();
@@ -44,6 +43,7 @@ class LoginController extends GetxController {
 
   }
 
+  ///Signs in by first generating user credentials and then with such credentials writes the logged in user to storage
   Future<AppUser> signInWithEmail() async{
     UserCredential userCredential = await loginRepository.verifyUser(email: emailController.text, password: passwordController.text);
 
@@ -56,8 +56,9 @@ class LoginController extends GetxController {
     return loggedInUser;
   }
 
-  
 
+
+  ///Signs in by first generating user credentials and then with such credentials writes the logged in user to storage
   Future<AppUser> signInWithGoogle() async {
 
     UserCredential userCredential = await loginRepository.signInWithGoogle();
