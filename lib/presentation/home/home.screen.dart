@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:loops/model/Project.dart';
 import 'package:loops/presentation/general_components/left_drag_drawer.dart';
-import 'package:loops/presentation/home/ProjectTile.dart';
+import 'package:loops/presentation/home/project_tile.dart';
 
 import 'controllers/home.controller.dart';
 
