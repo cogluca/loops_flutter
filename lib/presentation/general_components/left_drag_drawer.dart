@@ -52,16 +52,7 @@ class LeftDragDrawer extends GetView<HomeController> {
                           textAlign: TextAlign.left,
                         ),
                       ]))),
-          ListTile(
-            title: const Text('Print'),
-            onTap: () {
-              Get.find<HomeController>().onTap();
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Navigator.pop(context);
-            },
-          ),
+
           ListTile(
             title: const Text('Go to Projects'),
             onTap: () {
