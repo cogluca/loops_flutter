@@ -30,6 +30,10 @@ class BacklogController extends GetxController {
   TextEditingController meetingDescription = TextEditingController();
   TextEditingController meetingDate = TextEditingController();
 
+  var homeController = Get.put(HomeController());
+
+
+
   @override
   void onInit() {
     super.onInit();
@@ -39,6 +43,7 @@ class BacklogController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+
   }
 
   @override
@@ -79,7 +84,7 @@ class BacklogController extends GetxController {
   /// repository method relative to the task
   Future<void> saveNewlyCreatedTask() async {
     String currentSprintId = "";
-    String projectId = Get.find<HomeController>().currentProjectId;
+    String projectId = homeController.currentProjectId;
     int position = Get.find<GetStorage>().read('completeBacklogTasks');
 
     if (assignToSprintState.value == true) {

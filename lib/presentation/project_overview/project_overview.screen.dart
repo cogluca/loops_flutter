@@ -17,11 +17,14 @@ import '../../model/Sprint.dart';
 import '../home/controllers/home.controller.dart';
 import 'components/bar_chart.dart';
 import 'controllers/project_overview.controller.dart';
+import 'package:get/get.dart';
 
 class ProjectOverviewScreen extends GetView<ProjectOverviewController> {
   dynamic projectData = Get.parameters;
 
   static final GlobalKey<ScaffoldState> _scaffoldKeyProject = GlobalKey<ScaffoldState>();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +67,7 @@ class ProjectOverviewScreen extends GetView<ProjectOverviewController> {
                 )),
             IconButton(
                 onPressed: () {
-                  Get.offAllNamed('project-overview');
+                  Get.offAllNamed('/project-overview');
                 },
                 icon: const Icon(
                   Icons.home,
