@@ -46,6 +46,9 @@ class BacklogRepository {
 
     String sprintId = Get.find<GetStorage>().read('currentProjectSprintId');
 
+    print("current sprint id in backlog repository is $sprintId");
+
+    //3UptoFPHwu1xZ9qIkdib
     QuerySnapshot querySnapshot = await firestore
         .collection('task')
         .where('sprintId', isEqualTo: sprintId)
@@ -60,7 +63,7 @@ class BacklogRepository {
             Task singleTask = Task.fromJson(element);
             tasksToReturn.add(singleTask);
           }
-          ;
+
         }
       });
     }
@@ -78,7 +81,7 @@ class BacklogRepository {
 
   ///Adds a new task passed as argument to the task collection on the database
   Future<void> addNewTask(Task toInsertTask) async {
-    firestore.collection('task').add(toInsertTask.toJson()).onError(
+    firestore.collection('task').add(toInsertTask.toJson()).then((value) => print("correctly added item to Backlog")).onError(
         (error, stackTrace) =>
             throw Failure('There was an error adding new Task onto database'));
   }

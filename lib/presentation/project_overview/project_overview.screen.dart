@@ -21,9 +21,7 @@ import 'controllers/project_overview.controller.dart';
 class ProjectOverviewScreen extends GetView<ProjectOverviewController> {
   dynamic projectData = Get.parameters;
 
-
   static final GlobalKey<ScaffoldState> _scaffoldKeyProject = GlobalKey<ScaffoldState>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +56,7 @@ class ProjectOverviewScreen extends GetView<ProjectOverviewController> {
           children: [
             IconButton(
                 onPressed: () {
-                  Get.toNamed('/backlog');
+                  Get.offAllNamed('/backlog');
                 },
                 icon: const Icon(
                   Icons.book,

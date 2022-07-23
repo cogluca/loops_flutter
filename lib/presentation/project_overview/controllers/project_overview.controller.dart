@@ -32,9 +32,15 @@ class ProjectOverviewController extends GetxController {
   TextEditingController meetingDescription = TextEditingController();
   TextEditingController meetingDate = TextEditingController();
 
+  RxString projectStartDateConstraint = " ".obs;
+  RxString projectEndDateConstraint = " ".obs;
+
+  late DateTime projectWideTemporalConstraint;
+
   @override
   void onInit() {
     super.onInit();
+
   }
 
   @override
@@ -51,9 +57,9 @@ class ProjectOverviewController extends GetxController {
     screenTitle = getStorage.read('choosenProjectName');
   }
 
-  ///Retrieves a list of Sprint objects that comprise their underlying tasks
-  ///Returns a Stream of type List<Sprint>
-  ///Subsequently updates the observable value which in turn notifies the observes UI component
+  ///Retrieves a list of Sprint objects that comprise their underlying tasks.
+  ///Returns a Stream of type List<Sprint>.
+  ///Subsequently updates the observable value which in turn notifies the observes UI component.
 
   Stream<List<Sprint>> retrieveSprints() async* {
     String projectId = getStorage.read('choosenProject');
@@ -72,7 +78,7 @@ class ProjectOverviewController extends GetxController {
     update();
   }
 
-  /// Retrieves Sprint object according to which one a local storage state manager defines as current
+  /// Retrieves Sprint object according to which one a local storage state manager defines as current.
   /// Subsequently updates the observable value [currentSprint] which in turn notifies the observes UI component through the [update] method
 
   Future<void> retrieveCurrentSprint() async {
@@ -91,7 +97,7 @@ class ProjectOverviewController extends GetxController {
   }
 
   ///Deactives current sprint, this can mean semantically both having a sprint finished or ending it prematurely, through repository call updates the storage contained sprint document value
-  ///to completed
+  ///to completed.
   ///Subsequently notifies and updates the UI component listening to the [currentSprint] variable
   Future<void> turnSprintOff() async {
     await projectRepository.turnSprintOff();

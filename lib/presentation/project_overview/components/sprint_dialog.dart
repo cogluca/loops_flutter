@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:loops/presentation/project_overview/controllers/project_overview.controller.dart';
+import 'package:get/get.dart';
 
 class SprintDialog extends GetView<ProjectOverviewController> {
 
@@ -19,8 +20,14 @@ class SprintDialog extends GetView<ProjectOverviewController> {
             ),
             controller: controller.sprintStartDate,
             onTap: () async {
+
+              DateTime projectWideStartDateConstraint = DateTime.parse(controller.projectStartDateConstraint.value);
+              DateTime projectWideEndDateConstraint = DateTime.parse(controller.projectEndDateConstraint.value);
+
+              print(projectWideEndDateConstraint.toString());
+
               String pickedMonth = '';
-              DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.utc(2025));
+              DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: projectWideStartDateConstraint, lastDate: projectWideEndDateConstraint);
               pickedMonth = pickedDate!.month.toString();
               if(pickedMonth.length > 1) {
                 controller.sprintStartDate.text =

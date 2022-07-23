@@ -68,6 +68,8 @@ class BacklogController extends GetxController {
   Stream<List<Task>> retrieveCurrentTasksOfSprint() async* {
     String projectId = Get.find<HomeController>().currentProjectId;
 
+
+
     yield* Stream.periodic(const Duration(seconds: 3), (_) {
       return backlogRepository.retrieveCurrentSprintTasks(projectId);
     }).asyncMap((value) async => await value);
@@ -86,7 +88,7 @@ class BacklogController extends GetxController {
     }
 
     Task newTask = Task(
-        '',
+        ' ',
         createdNewTask.text,
         projectId,
         'epicId',
@@ -99,7 +101,7 @@ class BacklogController extends GetxController {
         currentSprintId,
         int.parse(storyPoints.text),
         false,
-        '',
+        ' ',
         '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
         position);
 

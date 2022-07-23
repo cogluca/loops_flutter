@@ -38,6 +38,16 @@ class TaskviewView extends GetView<BacklogController> {
               onTap: () async {
                 DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.utc(2025));
                 controller.startDate.text = '${pickedDate?.year}-${pickedDate?.month}-${pickedDate?.day}';
+                String pickedMonth = pickedDate!.month.toString();
+                if(pickedMonth.length > 1) {
+                  controller.startDate.text =
+                  '${pickedDate.year}-${pickedDate.month}-${pickedDate.day}';
+                }
+                else{
+                  controller.startDate.text = '${pickedDate.year}-0${pickedDate.month}-${pickedDate.day}';
+                }
+
+
               },
             ),
             padding: const EdgeInsets.all(8.0),
@@ -52,7 +62,14 @@ class TaskviewView extends GetView<BacklogController> {
               controller: controller.endDate,
               onTap: () async {
                 DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.utc(2025));
-                controller.endDate.text = '${pickedDate?.year}-${pickedDate?.month}-${pickedDate?.day}';
+                String pickedMonth = pickedDate!.month.toString();
+                if(pickedMonth.length > 1) {
+                  controller.endDate.text =
+                  '${pickedDate.year}-${pickedDate.month}-${pickedDate.day}';
+                }
+                else{
+                  controller.endDate.text = '${pickedDate.year}-0${pickedDate.month}-${pickedDate.day}';
+                }
               },
             ),
             padding: const EdgeInsets.all(8.0),

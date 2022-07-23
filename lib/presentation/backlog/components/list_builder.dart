@@ -20,6 +20,7 @@ class ListBuilder extends GetView<BacklogController> {
               child: GetBuilder<BacklogController>(
                   init: Get.find<BacklogController>(),
                   builder: (value) {
+                    print(dataSnapshot.hasData);
                     if (dataSnapshot.hasData) {
                       return ReorderableListView.builder(
                         scrollDirection: Axis.vertical,
