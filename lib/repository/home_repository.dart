@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
 import 'package:loops/model/Project.dart';
+import 'package:loops/presentation/login/controllers/login.controller.dart';
 
 class HomeRepository {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -9,8 +11,9 @@ class HomeRepository {
   Future<List<Project>> getProjects() async {
     late List<Project> dataRef = <Project>[];
     late Project singleProject;
+    String userUid = Get.find<LoginController>().loggedInUser.userUid;
 
-    QuerySnapshot querySnapshot = await firestore.collection('projects').get();
+    QuerySnapshot querySnapshot = await firestore.collection('projects').where('ownerId', isEqualTo: userUid).get();
 
     if (querySnapshot.docs.isNotEmpty) {
       querySnapshot.docs.forEach((element) {

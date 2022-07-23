@@ -10,7 +10,7 @@ class ProjectCreationScreen extends GetView<HomeController> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: const Text('Task Creation'),
+          title: const Text('Project Creation'),
           centerTitle: true,
         ),
         body: Column(
@@ -19,8 +19,8 @@ class ProjectCreationScreen extends GetView<HomeController> {
             Container(
               child: TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Task name',
-                  hintText: 'Enter task name',
+                  labelText: 'Project name',
+                  hintText: 'Enter project name',
                   border: OutlineInputBorder(),
                 ),
                 controller: controller.createdNewProject,
@@ -41,7 +41,7 @@ class ProjectCreationScreen extends GetView<HomeController> {
             Container(
               child: TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'When will the task start ?',
+                  labelText: 'When will the project start ?',
                   hintText: 'yyyy/mm/dd',
                   border: OutlineInputBorder(),
                 ),
@@ -62,7 +62,7 @@ class ProjectCreationScreen extends GetView<HomeController> {
             Container(
               child: TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'When will the task end ?',
+                  labelText: 'When will the project end ?',
                   hintText: 'yyyy/mm/dd',
                   border: OutlineInputBorder(),
                 ),
@@ -73,8 +73,14 @@ class ProjectCreationScreen extends GetView<HomeController> {
                       initialDate: DateTime.now(),
                       firstDate: DateTime.now(),
                       lastDate: DateTime.utc(2025));
-                  controller.newEndDate.text =
-                      '${pickedDate?.year}-${pickedDate?.month}-${pickedDate?.day}';
+                  String pickedMonth = pickedDate!.month.toString();
+                  if(pickedMonth.length > 1) {
+                    controller.newEndDate.text =
+                    '${pickedDate.year}-${pickedDate.month}-${pickedDate.day}';
+                  }
+                  else{
+                    controller.newEndDate.text = '${pickedDate.year}-0${pickedDate.month}-${pickedDate.day}';
+                  }
                 },
               ),
               padding: const EdgeInsets.all(8.0),
