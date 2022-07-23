@@ -21,7 +21,9 @@ import 'controllers/project_overview.controller.dart';
 class ProjectOverviewScreen extends GetView<ProjectOverviewController> {
   dynamic projectData = Get.parameters;
 
+
   static final GlobalKey<ScaffoldState> _scaffoldKeyProject = GlobalKey<ScaffoldState>();
+
 
   @override
   Widget build(BuildContext context) {

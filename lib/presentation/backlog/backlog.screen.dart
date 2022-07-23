@@ -18,36 +18,32 @@ class BacklogScreen extends GetView<BacklogController> {
   String dropDownValue = '';
   static final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext aContext) {
     Get.find<GetStorage>().write('taskLongPressed', false);
 
     return Scaffold(
+
       resizeToAvoidBottomInset: true,
-      key: _scaffoldKey,
       appBar: AppBar(
           title: const Text('Backlog'),
           centerTitle: true,
-          actions: Get.find<GetStorage>().read('taskLongPressed')
-              ? [
+
+          actions:[
                   IconButton(
-                    onPressed: () => {},
-                    icon: const Icon(Icons.close),
-                  ),
-                  IconButton(
-                      onPressed: () => {},
-                      icon: const Icon(CupertinoIcons.trash))
-                ]
-              : [
-                  IconButton(
-                      onPressed: () =>
-                          {_scaffoldKey.currentState!.openEndDrawer()},
+                      onPressed: () {
+                      Builder(builder: (context)
+                          {Scaffold.of(aContext).openEndDrawer();
+                      return Container(
+
+                      );});},
                       icon: const Icon(Icons.more_vert_outlined)),
-                ]),
+          ]),
       endDrawer: MeetDialog(),
       endDrawerEnableOpenDragGesture: true,
       drawer: LeftDragDrawer(),
-      body: MediaQuery.of(context).orientation == Orientation.portrait
+      body: MediaQuery.of(aContext).orientation == Orientation.portrait
           ? Column(children: [
               const Padding(
                   padding: EdgeInsets.all(8.00),
