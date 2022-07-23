@@ -31,7 +31,4 @@ Done following the design thinking methodology
 
 ## Instructions to run
 
-- Install an extension that can handle flutter builds or run it smoothly with Android Studio
-- Clone the project in its current version
-- Add the client Id's for both Android and Apple in a file named secrets.dart
-- Refer to [FlutterFire Docs](https://firebase.google.com/docs/guides) for more information on how to run a Flutter project
+- Email me at cog.gianluca@gmail.com to ask for the internal testing version access
