@@ -2,39 +2,46 @@
 
 
 class AppUser {
-  String? _user = "";
-  String? _email = "";
-  String? _credential = "";
-  String? _imageUrl = "";
+  String _userUid;
+  String _user;
+  String _email;
+  String _credential;
+  String _imageUrl;
 
-  AppUser(String? user, String? email, String? credential, String? imgUrl){
-    _user= user;
-    _email= email;
-    _credential = credential;
-    _imageUrl = imgUrl;
-  }
+  AppUser(this._userUid, this._user, this._email, this._credential,
+      this._imageUrl);
 
   Map<String, dynamic> toMap() {
     return {
+      'userUid': _userUid,
       'user': _user,
       'email': _email,
       'credential': _credential,
       'imageUrl': _imageUrl
     };
-
   }
 
-  AppUser.fromMap(Map map)
-  : _user = map['user'],
-  _email = map['email'],
-  _credential = map['credential'],
-  _imageUrl = map['imageUrl'];
+  factory AppUser.fromMap(Map map){
+    return AppUser(map['userUid'], map['user'], map['email'], map['credential'],
+        map['imageUrl']);
+  }
 
-  String? get user => _user;
+    String get user =>
+    _user;
 
-  String? get email => _email;
+    String get email =>
+    _email;
 
-  String? get credential => _credential;
+    String get credential =>
+    _credential;
 
-  String? get imageUrl => _imageUrl;
-}
+    String get imageUrl =>
+    _imageUrl;
+
+    String get userUid =>
+    _userUid;
+
+    set userUid(String value) {
+      _userUid = value;
+    }
+  }

@@ -3,11 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Project {
   String _id;
   String _name;
-
+  String _ownerId;
   String _oneLiner;
-
   String _startDate;
-
   String _endDate;
   int _taskCompleted;
   int _taskToDo;
@@ -17,6 +15,7 @@ class Project {
   Project(
       this._id,
       this._name,
+      this._ownerId,
       this._oneLiner,
       this._startDate,
       this._endDate,
@@ -28,6 +27,7 @@ class Project {
   dynamic toJson() => {
         'id': id,
         'name': name.toString(),
+        'ownerId': ownerId,
         'oneLiner': oneLiner.toString(),
         'startDate': startDate.toString(),
         'endDate': endDate.toString(),
@@ -41,6 +41,7 @@ class Project {
     return Project(
         jsonProjectData.id,
         jsonProjectData['name'],
+        jsonProjectData['ownerId'],
         jsonProjectData['oneLiner'],
         jsonProjectData['startDate'],
         jsonProjectData['endDate'],
@@ -51,16 +52,17 @@ class Project {
   }
 
   dynamic toDynamic() => {
-    'id': id.toString(),
-    'name': name.toString(),
-    'oneLiner': oneLiner.toString(),
-    'startDate': startDate.toString(),
-    'endDate': endDate.toString(),
-    'taskCompleted': taskCompleted.toString(),
-    'taskToDo': taskToDo.toString(),
-    'currentSprintId': currentSprintId.toString(),
-    'projectGoal': projectGoal.toString()
-  };
+        'id': id.toString(),
+        'name': name.toString(),
+        'ownerId': ownerId.toString(),
+        'oneLiner': oneLiner.toString(),
+        'startDate': startDate.toString(),
+        'endDate': endDate.toString(),
+        'taskCompleted': taskCompleted.toString(),
+        'taskToDo': taskToDo.toString(),
+        'currentSprintId': currentSprintId.toString(),
+        'projectGoal': projectGoal.toString()
+      };
 
   String get id => _id;
 
@@ -79,6 +81,12 @@ class Project {
   String get currentSprintId => _currentSprintId;
 
   String get projectGoal => _projectGoal;
+
+  String get ownerId => _ownerId;
+
+  set ownerId(String value) {
+    _ownerId = value;
+  }
 
   set id(String value) {
     _id = value;

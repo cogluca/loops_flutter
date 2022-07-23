@@ -31,4 +31,4 @@ Done following the design thinking methodology
 
 ## Instructions to run
 
-- Email me at cog.gianluca@gmail.com to ask for the internal testing version access
+- Email me at cog.gianluca@gmail.com to ask for the Android internal testing version access 

@@ -19,6 +19,14 @@ class LoginController extends GetxController {
   TextEditingController get emailController => _emailController;
   TextEditingController get passwordController => _passwordController;
 
+  late AppUser _loggedInUser;
+
+
+  AppUser get loggedInUser => _loggedInUser;
+
+  set loggedInUser(AppUser value) {
+    _loggedInUser = value;
+  }
 
   @override
   void onInit() {
@@ -50,8 +58,9 @@ class LoginController extends GetxController {
     String? usernm = userCredential.user?.displayName;
     String? email = userCredential.user?.email;
     String? imgNetworkUrl = userCredential.user?.photoURL;
+    String? userUid = userCredential.user?.uid;
 
-    AppUser loggedInUser = AppUser(usernm ,email, userCredential.credential.toString(), imgNetworkUrl);
+    AppUser loggedInUser = AppUser(userUid.toString(), usernm.toString() ,email.toString(), userCredential.credential.toString(), imgNetworkUrl.toString());
     storage.write("user", loggedInUser.toMap());
     return loggedInUser;
   }
@@ -63,11 +72,13 @@ class LoginController extends GetxController {
 
     UserCredential userCredential = await loginRepository.signInWithGoogle();
 
-    String? usernm = userCredential.user?.displayName;
+    String? usernm = userCredential.user?.displayName.toString();
     String? email = userCredential.user?.email;
     String? imgNetworkUrl = userCredential.user?.photoURL;
 
-    AppUser loggedInUser = AppUser(usernm ,email, userCredential.credential.toString(), imgNetworkUrl);
+    String? id = userCredential.user?.uid;
+
+    loggedInUser = AppUser(id.toString(), usernm.toString() ,email.toString(), userCredential.credential.toString(), imgNetworkUrl.toString());
 
     storage.write("user", loggedInUser.toMap());
     return loggedInUser;

@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:loops/model/Sprint.dart';
+import 'package:loops/presentation/login/controllers/login.controller.dart';
 import 'package:loops/repository/home_repository.dart';
 import 'package:loops/repository/login_repository.dart';
 import 'package:loops/model/Project.dart';
+
+import '../../../model/AppUser.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
@@ -106,8 +109,10 @@ class HomeController extends GetxController {
 
   ///Combines text controllers and default values in a Project objects and sends it over to the correspondent repository method for document storage
   Future<void> saveNewlyCreatedProject() async {
+
+    AppUser loggedInUser = Get.find<LoginController>().loggedInUser;
     
-    Project toSaveProject = Project('', createdNewProject.text, oneLiner.text, newStartDate.text, newEndDate.text, 0, 0, '', projectGoal.text);
+    Project toSaveProject = Project('', createdNewProject.text, loggedInUser.userUid , oneLiner.text, newStartDate.text, newEndDate.text, 0, 0, '', projectGoal.text);
     
     await homeRepository.saveNewlyCreatedProject(projectToBeSaved: toSaveProject);
   }
