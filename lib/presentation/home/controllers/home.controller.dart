@@ -96,9 +96,11 @@ class HomeController extends GetxController {
   }
 
   ///writes on local storage the id of a project that has been double tapped on and sets also its relative name
-  void writeAndSetProjectIdOnStorage(String id, String projectName) {
+  void writeAndSetProjectIdOnStorage(String id, String projectName, String projectStartDate, String projectEndDate) {
     getStorage.write('choosenProject', id);
     getStorage.write('choosenProjectName', projectName);
+    getStorage.write('projectStartDate', projectStartDate);
+    getStorage.write('projectEndDate', projectEndDate);
     currentProjectId = id;
   }
 
@@ -118,14 +120,14 @@ class HomeController extends GetxController {
   }
 
   ///Makes use of the Get framework underlying navigation infrastracture to move to the Backlog Screen
-  void navigateToBacklog(String id, projectName) {
-    writeAndSetProjectIdOnStorage(id, projectName);
+  void navigateToBacklog(Project project) {
+    writeAndSetProjectIdOnStorage(project.id, project.name, project.startDate, project.endDate);
     Get.toNamed('/backlog');
   }
 
   ///Makes use of the Get framework underlying navigation infrastracture to move to the project overview Screen
-  void navigateToProjectScreen(String id, String projectName, Project project) {
-    writeAndSetProjectIdOnStorage(id, projectName);
+  void navigateToProjectScreen(Project project) {
+    writeAndSetProjectIdOnStorage(project.id, project.name, project.startDate, project.endDate);
     writeProjectCurrentSprint(project.currentSprintId);
     Get.toNamed('/project-overview', parameters: project.toDynamic());
   }

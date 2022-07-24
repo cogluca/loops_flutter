@@ -94,7 +94,7 @@ class BacklogScreen extends GetView<BacklogController> {
           children: [
             IconButton(
                 onPressed: () {
-                  Get.toNamed('/backlog');
+                  Get.offAllNamed('/backlog');
                 },
                 icon: const Icon(
                   Icons.book,

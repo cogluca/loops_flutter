@@ -21,10 +21,9 @@ class SprintDialog extends GetView<ProjectOverviewController> {
             controller: controller.sprintStartDate,
             onTap: () async {
 
-              DateTime projectWideStartDateConstraint = DateTime.parse(controller.projectStartDateConstraint.value);
-              DateTime projectWideEndDateConstraint = DateTime.parse(controller.projectEndDateConstraint.value);
+              DateTime projectWideStartDateConstraint = DateTime.parse(controller.projectStartDateConstraint);
+              DateTime projectWideEndDateConstraint = DateTime.parse(controller.projectEndDateConstraint);
 
-              print(projectWideEndDateConstraint.toString());
 
               String pickedMonth = '';
               DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: projectWideStartDateConstraint, lastDate: projectWideEndDateConstraint);

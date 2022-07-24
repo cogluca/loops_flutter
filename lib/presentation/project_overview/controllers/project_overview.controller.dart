@@ -33,8 +33,8 @@ class ProjectOverviewController extends GetxController {
   TextEditingController meetingDescription = TextEditingController();
   TextEditingController meetingDate = TextEditingController();
 
-  RxString projectStartDateConstraint = " ".obs;
-  RxString projectEndDateConstraint = " ".obs;
+  String projectStartDateConstraint = " ";
+  String projectEndDateConstraint = " ";
 
   late DateTime projectWideTemporalConstraint;
 
@@ -43,7 +43,8 @@ class ProjectOverviewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
+    projectStartDateConstraint = Get.find<GetStorage>().read('projectStartDate');
+    projectEndDateConstraint = Get.find<GetStorage>().read('projectEndDate');
   }
 
   @override
@@ -116,6 +117,9 @@ class ProjectOverviewController extends GetxController {
 
     Sprint sprintStarted = Sprint(
         '', sprintStartDate.text, sprintEndDate.text, [], false, projectId);
+
+    //DateTime projectWideStartDateConstraint = DateTime.parse(projectStartDateConstraint.value);
+    //print("VALUE OF DATETIME IS${projectWideStartDateConstraint.toString()}");
 
     await projectRepository.startASprint(sprintStarted);
     String currentSprintId =

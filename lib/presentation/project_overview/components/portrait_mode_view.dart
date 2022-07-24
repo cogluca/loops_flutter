@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:loops/presentation/general_components/scroll_speed.dart';
 import 'package:loops/presentation/project_overview/controllers/project_overview.controller.dart';
 
@@ -22,12 +23,20 @@ class PortraitMode extends GetView<ProjectOverviewController> {
                     AsyncSnapshot<List<Sprint>> dataSnapshot) {
                   if (dataSnapshot.connectionState != ConnectionState.waiting) {
                     if (!dataSnapshot.hasData) {
-                      return Column(mainAxisAlignment: MainAxisAlignment.center ,children: const [
-                          Text('No Sprints currently active, start one !', style:
-                            TextStyle(fontSize: 20),),
-                        Icon(Icons.warning_amber_rounded, size: 50, color: Colors.amber,
-                        )
-                      ],);
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'No Sprints currently active, start one !',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Icon(
+                            Icons.warning_amber_rounded,
+                            size: 50,
+                            color: Colors.amber,
+                          )
+                        ],
+                      );
                     } else {
                       return Card(
                           child: SingleChildScrollView(
@@ -66,6 +75,16 @@ class PortraitMode extends GetView<ProjectOverviewController> {
                   showModalBottomSheet(
                       context: context,
                       builder: (BuildContext context) {
+                        String fromContextProjectStartDate =
+                            Get.find<GetStorage>().read('projectStartDate');
+                        DateTime projectStartConstraint =
+                            DateTime.parse(fromContextProjectStartDate);
+
+                        String fromContextProjectEndDate =
+                            Get.find<GetStorage>().read('projectEndDate');
+                        DateTime projectEndConstraint =
+                            DateTime.parse(fromContextProjectEndDate);
+
                         return Wrap(children: [
                           Column(children: [
                             const SizedBox(
@@ -85,8 +104,8 @@ class PortraitMode extends GetView<ProjectOverviewController> {
                                   DateTime? pickedDate = await showDatePicker(
                                       context: context,
                                       initialDate: DateTime.now(),
-                                      firstDate: DateTime.now(),
-                                      lastDate: DateTime.utc(2050));
+                                      firstDate: projectStartConstraint,
+                                      lastDate: projectEndConstraint);
                                   pickedMonth = pickedDate!.month.toString();
                                   pickedDay = pickedDate.day.toString();
                                   if (pickedMonth.length > 1) {
@@ -121,8 +140,8 @@ class PortraitMode extends GetView<ProjectOverviewController> {
                                   DateTime? pickedDate = await showDatePicker(
                                       context: context,
                                       initialDate: DateTime.now(),
-                                      firstDate: DateTime.now(),
-                                      lastDate: DateTime.utc(2050));
+                                      firstDate: projectStartConstraint,
+                                      lastDate: projectEndConstraint);
                                   pickedMonth = pickedDate!.month.toString();
                                   pickedDay = pickedDate!.day.toString();
                                   if (pickedMonth.length > 1) {

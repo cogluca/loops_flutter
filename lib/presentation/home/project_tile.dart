@@ -18,8 +18,8 @@ class ProjectTile extends GetView<HomeController> {
                 top: 36.0, left: 10.0, right: 6.0, bottom: 6.0),
             child: InkWell(
                 onDoubleTap: () {
-                  Get.find<HomeController>()
-                      .navigateToProjectScreen(project.id, project.name, project);
+                  controller
+                      .navigateToProjectScreen(project);
                 },
                 child: ListTile(
                   title: Text('Project: ${project.name}'),

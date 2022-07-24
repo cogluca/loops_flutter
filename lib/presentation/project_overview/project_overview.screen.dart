@@ -24,16 +24,12 @@ class ProjectOverviewScreen extends GetView<ProjectOverviewController> {
 
   static final GlobalKey<ScaffoldState> _scaffoldKeyProject = GlobalKey<ScaffoldState>();
 
-
-
   @override
   Widget build(BuildContext context) {
     Map projectArgument = Get.parameters;
-    print(projectArgument.toString());
-
-    Get.find<GetStorage>().write('projectGoal', projectData['projectGoal']);
 
     String projectName = Get.find<GetStorage>().read('choosenProjectName');
+
 
 
     return Scaffold(
