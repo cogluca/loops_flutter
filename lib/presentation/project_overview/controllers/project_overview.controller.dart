@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:loops/repository/project_repository.dart';
 
 import '../../../model/Sprint.dart';
+import '../../home/controllers/home.controller.dart';
 
 class ProjectOverviewController extends GetxController {
   //TODO: Implement ProjectOverviewController
@@ -36,6 +37,8 @@ class ProjectOverviewController extends GetxController {
   RxString projectEndDateConstraint = " ".obs;
 
   late DateTime projectWideTemporalConstraint;
+
+  var homeController = Get.put(HomeController());
 
   @override
   void onInit() {
