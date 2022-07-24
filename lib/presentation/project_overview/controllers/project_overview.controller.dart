@@ -43,7 +43,8 @@ class ProjectOverviewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    projectStartDateConstraint = Get.find<GetStorage>().read('projectStartDate');
+    projectStartDateConstraint =
+        Get.find<GetStorage>().read('projectStartDate');
     projectEndDateConstraint = Get.find<GetStorage>().read('projectEndDate');
   }
 
@@ -89,13 +90,13 @@ class ProjectOverviewController extends GetxController {
     String currentSprintId = '';
     late Sprint retrievedSprint;
 
-    currentSprintId = Get.find<GetStorage>().read('currentProjectSprintId');
+    String hasCurrentSprint = Get.find<GetStorage>().read('hasCurrentSprint');
 
-    if (currentSprintId != '' || currentSprintId != null) {
+    if (hasCurrentSprint.isNotEmpty) {
       retrievedSprint =
           await projectRepository.retrieveCurrentSprint(currentSprintId);
+      currentSprint.add(retrievedSprint);
     }
-    currentSprint.add(retrievedSprint);
 
     update();
   }

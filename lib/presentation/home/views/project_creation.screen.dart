@@ -60,6 +60,14 @@ class ProjectCreationScreen extends GetView<HomeController> {
                   else{
                     controller.newStartDate.text = '${pickedDate.year}-0${pickedDate.month}-${pickedDate.day}';
                   }
+                  String pickedDay = pickedDate!.day.toString();
+                  if(pickedDay.length > 1){
+                    controller.newStartDate.text =
+                    '${pickedDate.year}-${pickedDate.month}-${pickedDate.day}';
+                  }
+                  else{
+                    controller.newStartDate.text = '${pickedDate.year}-${pickedDate.month}-0${pickedDate.day}';
+                  }
                 },
               ),
               padding: const EdgeInsets.all(8.0),
