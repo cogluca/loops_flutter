@@ -96,7 +96,7 @@ class ProjectRepository {
         .doc(sprintId)
         .update({'completed': true});
 
-    Get.find<GetStorage>().write('currentProjectSprintId', 'none');
+    Get.find<GetStorage>().write('currentProjectSprintId', "");
   }
 
   ///Starts a Sprint by adding the Sprint passed as parameter [startASprint], updates reference to current sprint on local storage and updates the current Project currentSprint field with the sprint id

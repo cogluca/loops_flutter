@@ -14,7 +14,12 @@ class ProjectCreationScreen extends GetView<HomeController> {
           title: const Text('Project Creation'),
           centerTitle: true,
         ),
-        body: Column(
+        body: SingleChildScrollView(child: Container(
+            padding: EdgeInsets.only(
+                top: 10,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 10
+            ), child:
+        Column(
           children: [
             const Padding(padding: EdgeInsets.only(top: 35)),
             Container(
@@ -106,6 +111,6 @@ class ProjectCreationScreen extends GetView<HomeController> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             )
           ],
-        ));
+        ))));
   }
 }

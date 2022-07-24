@@ -5,36 +5,35 @@ import 'package:loops/error_handling/Failure.dart';
 class DateFormatter {
 
 
-  static String fromDateTimeToIntendedFormat(DateTime pickedDate){
-
-
+  static String fromDateTimeToIntendedFormat(DateTime pickedDate) {
     String pickedMonth = pickedDate!.month.toString();
     String pickedDay = pickedDate!.day.toString();
 
-    if(pickedMonth.length > 1 && pickedDay.length > 1) {
+    if (pickedMonth.length > 1 && pickedDay.length > 1) {
       return '${pickedDate.year}-${pickedDate.month}-${pickedDate.day}';
     }
 
-    if(pickedMonth.length > 1 && !(pickedDay.length > 1)){
+    if (pickedMonth.length > 1 && !(pickedDay.length > 1)) {
       return '${pickedDate.year}-${pickedDate.month}-0${pickedDate.day}';
     }
 
-    if(!(pickedMonth.length > 1) && pickedDay.length > 1){
+    if (!(pickedMonth.length > 1) && pickedDay.length > 1) {
       return '${pickedDate.year}-0${pickedDate.month}-${pickedDate.day}';
     }
 
-    if(!(pickedMonth.length > 1) && !(pickedDay.length > 1)){
-      return'${pickedDate.year}-0${pickedDate.month}-0${pickedDate.day}';
+    if (!(pickedMonth.length > 1) && !(pickedDay.length > 1)) {
+      return '${pickedDate.year}-0${pickedDate.month}-0${pickedDate.day}';
     }
-    else{
+    else {
       throw Failure('BAD DATE Exception encountered');
     }
-
-
-
-
-
   }
+
+    //TODO: Implement the time converter
+
+    static String fromDateTimeHourToIntendedFormat(DateTime pickedDate) {
+      return "";
+    }
 
 
 
