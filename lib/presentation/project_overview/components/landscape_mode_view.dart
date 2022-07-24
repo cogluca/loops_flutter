@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:loops/presentation/project_overview/controllers/project_overview.controller.dart';
 
 import '../../../model/Sprint.dart';
+import '../../../utils/DateFormatter.dart';
 import '../../general_components/scroll_speed.dart';
 import 'bar_chart.dart';
 
@@ -107,24 +108,9 @@ class LandscapeMode extends GetView<ProjectOverviewController> {
                                     initialDate: DateTime.now(),
                                     firstDate: projectStartConstraint,
                                     lastDate: projectEndConstraint);
-                                controller.sprintStartDate.text =
-                                    '${pickedDate?.year}-${pickedDate?.month}-${pickedDate?.day}';
-                                String pickedMonth = pickedDate!.month.toString();
-                                String pickedDay = pickedDate.day.toString();
-                                if (pickedMonth.length > 1) {
-                                  controller.sprintStartDate.text =
-                                  '${pickedDate.year}-${pickedDate.month}-';
-                                } else {
-                                  controller.sprintStartDate.text =
-                                  '${pickedDate.year}-0${pickedDate.month}-';
-                                }
-                                if (pickedDay.length > 1) {
-                                  controller.sprintStartDate.text +=
-                                  '${pickedDate.day}';
-                                } else {
-                                  controller.sprintStartDate.text +=
-                                  '0${pickedDate.day}';
-                                }
+                                controller.sprintStartDate.text = DateFormatter
+                                    .fromDateTimeToIntendedFormat(
+                                    pickedDate!);
                               },
                             ),
                             padding: const EdgeInsets.all(8.0),
@@ -144,7 +130,9 @@ class LandscapeMode extends GetView<ProjectOverviewController> {
                                     firstDate: projectStartConstraint,
                                     lastDate: projectEndConstraint);
                                 controller.sprintEndDate.text =
-                                    '${pickedDate?.year}-${pickedDate?.month}-${pickedDate?.day}';
+                                    DateFormatter
+                                        .fromDateTimeToIntendedFormat(
+                                        pickedDate!);
                               },
                             ),
                             padding: const EdgeInsets.all(8.0),

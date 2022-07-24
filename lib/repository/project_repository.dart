@@ -30,10 +30,7 @@ class ProjectRepository {
       });
     } else {
       //allow to receive partial data, it isn't userfriendly to throw a brick into someone's face
-      List<QueryDocumentSnapshot> queryDocumentSnapshot =
-          querySnapshotOfSprint.docs;
-      int size = queryDocumentSnapshot.length;
-      throw 'Got some issues $size elements where retrieved';
+      throw Failure('The retrieveSprint query retrieved 0 Sprints inherent to current project');
     }
 
     for (var sprintElement in retrievedSprints) {

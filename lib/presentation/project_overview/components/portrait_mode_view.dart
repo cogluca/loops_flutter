@@ -7,6 +7,7 @@ import 'package:loops/presentation/general_components/scroll_speed.dart';
 import 'package:loops/presentation/project_overview/controllers/project_overview.controller.dart';
 
 import '../../../model/Sprint.dart';
+import '../../../utils/DateFormatter.dart';
 import 'bar_chart.dart';
 
 class PortraitMode extends GetView<ProjectOverviewController> {
@@ -99,29 +100,15 @@ class PortraitMode extends GetView<ProjectOverviewController> {
                                 ),
                                 controller: controller.sprintStartDate,
                                 onTap: () async {
-                                  String pickedMonth = '';
-                                  String pickedDay = '';
                                   DateTime? pickedDate = await showDatePicker(
                                       context: context,
                                       initialDate: DateTime.now(),
                                       firstDate: projectStartConstraint,
                                       lastDate: projectEndConstraint);
-                                  pickedMonth = pickedDate!.month.toString();
-                                  pickedDay = pickedDate.day.toString();
-                                  if (pickedMonth.length > 1) {
-                                    controller.sprintStartDate.text =
-                                        '${pickedDate.year}-${pickedDate.month}-';
-                                  } else {
-                                    controller.sprintStartDate.text =
-                                        '${pickedDate.year}-0${pickedDate.month}-';
-                                  }
-                                  if (pickedDay.length > 1) {
-                                    controller.sprintStartDate.text +=
-                                        '${pickedDate.day}';
-                                  } else {
-                                    controller.sprintStartDate.text +=
-                                        '0${pickedDate.day}';
-                                  }
+                                  controller.sprintStartDate.text =
+                                      DateFormatter
+                                          .fromDateTimeToIntendedFormat(
+                                              pickedDate!);
                                 },
                               ),
                               padding: const EdgeInsets.all(8.0),
@@ -135,29 +122,15 @@ class PortraitMode extends GetView<ProjectOverviewController> {
                                 ),
                                 controller: controller.sprintEndDate,
                                 onTap: () async {
-                                  String pickedMonth = '';
-                                  String pickedDay = '';
                                   DateTime? pickedDate = await showDatePicker(
                                       context: context,
                                       initialDate: DateTime.now(),
                                       firstDate: projectStartConstraint,
                                       lastDate: projectEndConstraint);
-                                  pickedMonth = pickedDate!.month.toString();
-                                  pickedDay = pickedDate!.day.toString();
-                                  if (pickedMonth.length > 1) {
-                                    controller.sprintEndDate.text =
-                                        '${pickedDate.year}-${pickedDate.month}-';
-                                  } else {
-                                    controller.sprintEndDate.text =
-                                        '${pickedDate.year}-0${pickedDate.month}-';
-                                  }
-                                  if (pickedDay.length > 1) {
-                                    controller.sprintEndDate.text +=
-                                        '${pickedDate.day}';
-                                  } else {
-                                    controller.sprintEndDate.text +=
-                                        '0${pickedDate.day}';
-                                  }
+
+                                  controller.sprintEndDate.text = DateFormatter
+                                      .fromDateTimeToIntendedFormat(
+                                          pickedDate!);
                                 },
                               ),
                               padding: const EdgeInsets.all(8.0),

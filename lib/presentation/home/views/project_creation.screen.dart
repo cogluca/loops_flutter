@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:loops/presentation/home/controllers/home.controller.dart';
+import 'package:loops/utils/DateFormatter.dart';
 
 
 class ProjectCreationScreen extends GetView<HomeController> {
@@ -52,22 +53,7 @@ class ProjectCreationScreen extends GetView<HomeController> {
                       initialDate: DateTime.now(),
                       firstDate: DateTime.now(),
                       lastDate: DateTime.utc(2025));
-                  String pickedMonth = pickedDate!.month.toString();
-                  if(pickedMonth.length > 1) {
-                    controller.newStartDate.text =
-                    '${pickedDate.year}-${pickedDate.month}-${pickedDate.day}';
-                  }
-                  else{
-                    controller.newStartDate.text = '${pickedDate.year}-0${pickedDate.month}-${pickedDate.day}';
-                  }
-                  String pickedDay = pickedDate!.day.toString();
-                  if(pickedDay.length > 1){
-                    controller.newStartDate.text =
-                    '${pickedDate.year}-${pickedDate.month}-${pickedDate.day}';
-                  }
-                  else{
-                    controller.newStartDate.text = '${pickedDate.year}-${pickedDate.month}-0${pickedDate.day}';
-                  }
+                  controller.newStartDate.text = DateFormatter.fromDateTimeToIntendedFormat(pickedDate!);
                 },
               ),
               padding: const EdgeInsets.all(8.0),
@@ -87,14 +73,7 @@ class ProjectCreationScreen extends GetView<HomeController> {
                       initialDate: DateTime.now(),
                       firstDate: DateTime.now(),
                       lastDate: DateTime.utc(2025));
-                  String pickedMonth = pickedDate!.month.toString();
-                  if(pickedMonth.length > 1) {
-                    controller.newEndDate.text =
-                    '${pickedDate.year}-${pickedDate.month}-${pickedDate.day}';
-                  }
-                  else{
-                    controller.newEndDate.text = '${pickedDate.year}-0${pickedDate.month}-${pickedDate.day}';
-                  }
+                  controller.newEndDate.text = DateFormatter.fromDateTimeToIntendedFormat(pickedDate!);
                 },
               ),
               padding: const EdgeInsets.all(8.0),

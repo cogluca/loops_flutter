@@ -33,6 +33,7 @@ class ProjectOverviewScreen extends GetView<ProjectOverviewController> {
 
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKeyProject,
       appBar: AppBar(
         title: Text(projectName),

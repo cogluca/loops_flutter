@@ -5,6 +5,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:loops/presentation/project_overview/controllers/project_overview.controller.dart';
 
+import '../../../utils/DateFormatter.dart';
+
 class MeetDialog extends GetView<ProjectOverviewController> {
   @override
   Widget build(BuildContext context) {
@@ -55,20 +57,7 @@ class MeetDialog extends GetView<ProjectOverviewController> {
                       initialDate: DateTime.now(),
                       firstDate: DateTime.now(),
                       lastDate: DateTime.utc(2050));
-                  pickedMonth = pickedDate!.month.toString();
-                  pickedDay = pickedDate!.day.toString();
-                  if (pickedMonth.length > 1) {
-                    controller.meetingDate.text =
-                        '${pickedDate.year}-${pickedDate.month}-';
-                  } else {
-                    controller.meetingDate.text =
-                        '${pickedDate.year}-0${pickedDate.month}-';
-                  }
-                  if (pickedDay.length > 1) {
-                    controller.meetingDate.text += '${pickedDate.day}';
-                  } else {
-                    controller.meetingDate.text += '0${pickedDate.day}';
-                  }
+                  controller.meetingDate.text = DateFormatter.fromDateTimeToIntendedFormat(pickedDate!);
                 },
               ),
               padding: const EdgeInsets.all(8.0),
