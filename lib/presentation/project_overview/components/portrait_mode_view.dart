@@ -75,6 +75,7 @@ class PortraitMode extends GetView<ProjectOverviewController> {
                   child: TextButton(
                 onPressed: () {
                   showModalBottomSheet(
+                    isScrollControlled: true,
                       context: context,
                       builder: (BuildContext context) {
                         String fromContextProjectStartDate =
@@ -87,7 +88,12 @@ class PortraitMode extends GetView<ProjectOverviewController> {
                         DateTime projectEndConstraint =
                             DateTime.parse(fromContextProjectEndDate);
 
-                        return Wrap(children: [
+                        return Wrap(children: [ Container(
+                        padding: EdgeInsets.only(
+                          top: 10,
+                          bottom: MediaQuery.of(context).viewInsets.bottom + 10
+                        )
+                            ,child:
                           Column(children: [
                             const SizedBox(
                               height: 25,
@@ -153,7 +159,7 @@ class PortraitMode extends GetView<ProjectOverviewController> {
                               height: 25,
                             ),
                           ])
-                        ]);
+                        )]);
                       });
                 },
                 child: const Text('Start a sprint'),
