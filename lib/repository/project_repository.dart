@@ -30,7 +30,7 @@ class ProjectRepository {
       });
     } else {
       //allow to receive partial data, it isn't userfriendly to throw a brick into someone's face
-      throw Failure('The retrieveSprint query retrieved 0 Sprints inherent to current project');
+      return List.empty();
     }
 
     for (var sprintElement in retrievedSprints) {

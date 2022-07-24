@@ -6,7 +6,7 @@ import '../../../model/Sprint.dart';
 class VelocityGraph extends StatefulWidget {
   List<Sprint> dataFromSprints;
 
-  VelocityGraph(List<Sprint> value, {Key? key })
+  VelocityGraph(List<Sprint> value, {Key? key})
       : dataFromSprints = value,
         super(key: key);
 
@@ -27,22 +27,20 @@ class VelocityGraphState extends State<VelocityGraph> {
   @override
   void initState() {
     super.initState();
-    final barGroup1 = makeGroupData( 5, 12);
-    final barGroup2 = makeGroupData( 16, 12);
-    final barGroup3 = makeGroupData( 18, 5);
-    final barGroup4 = makeGroupData( 20, 16);
-    final barGroup5 = makeGroupData( 17, 6);
-    final barGroup6 = makeGroupData( 19, 1.5);
-    final barGroup7 = makeGroupData( 10, 1.5);
+    final barGroup1 = makeGroupData(5, 12);
+    final barGroup2 = makeGroupData(16, 12);
+    final barGroup3 = makeGroupData(18, 5);
+    final barGroup4 = makeGroupData(20, 16);
+    final barGroup5 = makeGroupData(17, 6);
+    final barGroup6 = makeGroupData(19, 1.5);
+    final barGroup7 = makeGroupData(10, 1.5);
 
     int barCounter = 0;
 
-
     /**widget.dataFromSprints.forEach((element) {
-      print(element.listOfTasks.first.id);
-    });
-        */
-
+        print(element.listOfTasks.first.id);
+        });
+     */
 
     final items = [
       barGroup1,
@@ -53,14 +51,12 @@ class VelocityGraphState extends State<VelocityGraph> {
       barGroup6,
       barGroup7,
     ];
-
   }
-
 
   //TODO : Make the whole component responsive, dimensions are hardcoded
   @override
   Widget build(BuildContext context) {
-    widget.dataFromSprints.sort((a,b){
+    widget.dataFromSprints.sort((a, b) {
       return DateTime.parse(a.startDate).compareTo(DateTime.parse(b.startDate));
     });
 
@@ -76,17 +72,16 @@ class VelocityGraphState extends State<VelocityGraph> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Row(
+            children: widget.dataFromSprints.length > 0 ? <Widget>[
+
+            Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: const <Widget>[
-
                   SizedBox(
-                    width: 89,
+                    width: 40,
                   ),
-
                   Text(
                     'Project Velocity',
                     style: TextStyle(color: Colors.white, fontSize: 22),
@@ -100,30 +95,47 @@ class VelocityGraphState extends State<VelocityGraph> {
                 height: 38,
               ),
               Expanded(
-                child: BarChart(BarChartData(
-                  alignment: BarChartAlignment.start,
-                    borderData: FlBorderData(
-                        border: const Border(
-                          top: BorderSide.none,
-                          right: BorderSide.none,
-                          left: BorderSide(width: 1),
-                          bottom: BorderSide(width: 1),
-                        )),
-                    groupsSpace: 10,
-                    barGroups:
-                      widget.dataFromSprints.map((dataItem) => makeGroupData(dataItem.getTotalStoryPoints.toDouble(),dataItem.getTotalStoryPointsAchieved.toDouble())
-                        ).toList()))
-              ),
+                      child: BarChart(BarChartData(
+                          alignment: BarChartAlignment.start,
+                          borderData: FlBorderData(
+                              border: const Border(
+                            top: BorderSide.none,
+                            right: BorderSide.none,
+                            left: BorderSide(width: 1),
+                            bottom: BorderSide(width: 1),
+                          )),
+                          groupsSpace: 10,
+                          barGroups: widget.dataFromSprints
+                                  .map((dataItem) => makeGroupData(
+                                      dataItem.getTotalStoryPoints.toDouble(),
+                                      dataItem.getTotalStoryPointsAchieved
+                                          .toDouble()))
+                                  .toList()
+                      )))
+                  ,
               const SizedBox(
                 height: 12,
-              ),
-            ],
+              ),]
+            :  <Widget>[ Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+        Text(
+        'No Sprints currently active, you may start one !',
+        style: TextStyle(fontSize: 20),
+      ),
+      SizedBox(height: 20,),
+      Icon(
+        Icons.warning_amber_rounded,
+        size: 50,
+        color: Colors.amber,
+      )
+      ],
+    ) ],
           ),
         ),
       ),
     );
   }
-
 
   BarChartGroupData makeGroupData(double y1, double y2) {
     int barCounter = 0;
@@ -141,7 +153,5 @@ class VelocityGraphState extends State<VelocityGraph> {
     ]);
   }
 
-
   int barCounter = 0;
-
 }

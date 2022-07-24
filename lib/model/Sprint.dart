@@ -22,7 +22,7 @@ class Sprint {
       this._completed, this._projectId);
 
   int get getTotalStoryPoints {
-    int storyPoints = 0;
+    int storyPoints = 10;
     listOfTasks.forEach((element) {
       storyPoints += element.storyPoints;
     });

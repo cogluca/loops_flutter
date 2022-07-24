@@ -39,6 +39,7 @@ class PortraitMode extends GetView<ProjectOverviewController> {
                         ],
                       );
                     } else {
+
                       return Card(
                           child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
