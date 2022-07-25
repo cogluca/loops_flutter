@@ -16,30 +16,21 @@ import 'controllers/backlog.controller.dart';
 
 class BacklogScreen extends GetView<BacklogController> {
   String dropDownValue = '';
-  static final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  static final GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext aContext) {
     Get.find<GetStorage>().write('taskLongPressed', false);
 
     return Scaffold(
-
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-          title: const Text('Backlog'),
-          centerTitle: true,
-
-          actions:[
-                  IconButton(
-                      onPressed: () {
-                      Builder(builder: (context)
-                          {Scaffold.of(aContext).openEndDrawer();
-                      return Container(
-
-                      );});},
-                      icon: const Icon(Icons.more_vert_outlined)),
-          ]),
+      key: _scaffoldKey,
+      appBar: AppBar(title: const Text('Backlog'), centerTitle: true, actions: [
+        IconButton(
+            onPressed: () => _scaffoldKey.currentState!.openEndDrawer(),
+            icon: const Icon(Icons.more_vert_outlined)),
+      ]),
       endDrawer: MeetDialog(),
       endDrawerEnableOpenDragGesture: true,
       drawer: LeftDragDrawer(),

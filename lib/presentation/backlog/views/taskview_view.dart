@@ -144,6 +144,7 @@ class TaskviewView extends GetView<BacklogController> {
                               return AlertDialog(
                                 title: const Text('Ops! No active sprint'),
                                 content: Column(
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
                                     const Text(
                                         'You should first active a Sprint in the project overview section and then come back'),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:loops/presentation/project_overview/controllers/project_overview.controller.dart';
 import 'package:loops/repository/backlog_repository.dart';
 import 'package:loops/presentation/home/controllers/home.controller.dart';
 
@@ -38,6 +39,7 @@ class BacklogController extends GetxController {
   void onInit() {
     super.onInit();
     retrieveTasksOfProject();
+    Get.put(ProjectOverviewController());
   }
 
   @override
