@@ -127,6 +127,7 @@ class TaskviewView extends GetView<BacklogController> {
                   border: OutlineInputBorder(),
                 ),
                 controller: controller.storyPoints,
+                keyboardType: TextInputType.number,
               ),
               padding: const EdgeInsets.all(8.0),
             ),
