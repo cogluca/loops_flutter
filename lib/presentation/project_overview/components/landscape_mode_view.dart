@@ -39,10 +39,9 @@ class LandscapeMode extends GetView<ProjectOverviewController> {
                   );
                 } else {
                   return Card(
-                      child: SingleChildScrollView(
-                          controller: AdjustableScrollController(200),
-                          scrollDirection: Axis.horizontal,
-                          child: VelocityGraph(dataSnapshot.data!)));
+
+
+                          child: VelocityGraph(dataSnapshot.data!));
                 }
               } else {
                 return const Center(
