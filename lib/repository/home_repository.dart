@@ -11,9 +11,13 @@ class HomeRepository {
   Future<List<Project>> getProjects() async {
     late List<Project> dataRef = <Project>[];
     late Project singleProject;
-    String userUid = Get.find<LoginController>().loggedInUser.userUid;
+    String userUid = Get
+        .find<LoginController>()
+        .loggedInUser
+        .userUid;
 
-    QuerySnapshot querySnapshot = await firestore.collection('projects').where('ownerId', isEqualTo: userUid).get();
+    QuerySnapshot querySnapshot = await firestore.collection('projects').where(
+        'ownerId', isEqualTo: userUid).get();
 
     if (querySnapshot.docs.isNotEmpty) {
       querySnapshot.docs.forEach((element) {
@@ -40,4 +44,40 @@ class HomeRepository {
         .add(projectToBeSaved.toJson())
         .then((value) => print(value.id));
   }
+
+
+  Future<void> markProjectAsCompleted({required String id}) async {
+    await firestore.collection('projects').doc(id).update({
+      'completed': true,
+    });
+  }
+
+  Future<void> deleteProject({required String id}) async {
+    await firestore.collection('projects').doc(id).delete();
+  }
+
+  /**
+   *
+   * Possible batch execution template to emulate for subsequent Task and Sprint documents under the Project in deletion
+   *
+  Future<void> deleteProjectTaskReferences(id) async {
+    var snapshot = await firestore.collection('task').where(
+        'projectId', isEqualTo: id).get();
+    const MAX_WRITES_PER_BATCH = 500; /** https://cloud.google.com/firestore/quotas#writes_and_transactions */
+
+    const batches = chunk(snapshot.docs, MAX_WRITES_PER_BATCH);
+    const commitBatchPromises = [];
+
+    batches.forEach(batch => {
+    const writeBatch = firestore.batch();
+    batch.forEach(doc => writeBatch.delete(doc.ref));
+    commitBatchPromises.push(writeBatch.commit());
+    });
+
+    await Promise.all(commitBatchPromises);
+  }
+
+  */
+
+
 }

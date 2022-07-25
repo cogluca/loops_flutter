@@ -132,4 +132,17 @@ class HomeController extends GetxController {
     writeProjectCurrentSprint(project.currentSprintId);
     Get.toNamed('/project-overview', parameters: project.toDynamic());
   }
+
+  void markProjectAsCompleted(String id) async{
+
+    await homeRepository.markProjectAsCompleted(id: id);
+
+  }
+
+  void deleteProject(String id) async{
+
+    await homeRepository.deleteProject(id: id);
+
+  }
+
 }
