@@ -53,7 +53,7 @@ class BacklogController extends GetxController {
 
   ///Does first fast retrieve of tasks belonging to a project for initial display
   Future<void> firstTaskListRetrieve() async {
-    String projectId = Get.find<HomeController>().currentProjectId;
+    String projectId = Get.find<GetStorage>().read('choosenProject');
 
     List<Task> computedTasks =
         await backlogRepository.retrieveCompleteTasks(projectId);
@@ -63,7 +63,7 @@ class BacklogController extends GetxController {
   ///Retrieves a list of tasks through a stream method by calling a [retrieveCompleteTasks] method belonging to the backlog repository.
   ///Returns such Stream to the caller
   Stream<List<Task>> retrieveTasksOfProject() async* {
-    String projectId = Get.find<HomeController>().currentProjectId;
+    String projectId = Get.find<GetStorage>().read('choosenProject');
 
     yield* Stream.periodic(const Duration(seconds: 3), (_) {
       return backlogRepository.retrieveCompleteTasks(projectId);

@@ -13,6 +13,8 @@ class BacklogRepository {
   Future<List<Task>> retrieveCompleteTasks(String projectId) async {
     List<Task> tasksToReturn = <Task>[];
 
+    print("this project id is $projectId");
+
     QuerySnapshot querySnapshot = await firestore
         .collection('task')
         .where('projectId', isEqualTo: projectId)
@@ -45,34 +47,34 @@ class BacklogRepository {
     List<Task> tasksToReturn = <Task>[];
 
     String sprintId = Get.find<GetStorage>().read('currentProjectSprintId');
+    String hasSprint = Get.find<GetStorage>().read('hasCurrentSprint');
 
-    print("current sprint id in backlog repository is $sprintId");
+    if(hasSprint != "false") {
+      QuerySnapshot querySnapshot = await firestore
+          .collection('task')
+          .where('sprintId', isEqualTo: sprintId)
+          .get()
+          .onError((error, stackTrace) =>
+      throw Failure(
+          'There was a problem retrieving tasks of current Sprint'));
 
-    //3UptoFPHwu1xZ9qIkdib
-    QuerySnapshot querySnapshot = await firestore
-        .collection('task')
-        .where('sprintId', isEqualTo: sprintId)
-        .get()
-        .onError((error, stackTrace) => throw Failure(
-            'There was a problem retrieving tasks of current Sprint'));
-
-    if (querySnapshot.size > 0) {
-      querySnapshot.docs.forEach((element) {
-        if (element.get('completed') != true) {
-          if (sprintId == element.get('sprintId')) {
-            Task singleTask = Task.fromJson(element);
-            tasksToReturn.add(singleTask);
+      if (querySnapshot.size > 0) {
+        querySnapshot.docs.forEach((element) {
+          if (element.get('completed') != true) {
+            if (sprintId == element.get('sprintId')) {
+              Task singleTask = Task.fromJson(element);
+              tasksToReturn.add(singleTask);
+            }
           }
+        });
+      }
 
-        }
+      Get.find<GetStorage>().write('sprintBacklogTasks', tasksToReturn.length);
+
+      tasksToReturn.sort((a, b) {
+        return a.order.compareTo(b.order);
       });
     }
-
-    Get.find<GetStorage>().write('sprintBacklogTasks', tasksToReturn.length);
-
-    tasksToReturn.sort((a, b) {
-      return a.order.compareTo(b.order);
-    });
 
     return tasksToReturn;
   }

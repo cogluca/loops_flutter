@@ -128,7 +128,7 @@ class HomeController extends GetxController {
 
   ///Makes use of the Get framework underlying navigation infrastracture to move to the project overview Screen
   void navigateToProjectScreen(Project project) {
-    writeAndSetProjectOnStorage(project.id, project.name, project.startDate, project.endDate, project.currentSprintId);
+    writeAndSetProjectOnStorage(project.id, project.name, project.startDate, project.endDate, project.currentSprintId != "" ? "true" : "false");
     writeProjectCurrentSprint(project.currentSprintId);
     Get.toNamed('/project-overview', parameters: project.toDynamic());
   }

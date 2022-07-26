@@ -87,12 +87,13 @@ class ProjectOverviewController extends GetxController {
   /// Subsequently updates the observable value [currentSprint] which in turn notifies the observes UI component through the [update] method
 
   Future<void> retrieveCurrentSprint() async {
-    String currentSprintId = '';
+
     late Sprint retrievedSprint;
 
     String hasCurrentSprint = Get.find<GetStorage>().read('hasCurrentSprint');
+    String currentSprintId = Get.find<GetStorage>().read('currentProjectSprintId');
 
-    if (hasCurrentSprint.isNotEmpty) {
+    if (hasCurrentSprint != "false") {
       retrievedSprint =
           await projectRepository.retrieveCurrentSprint(currentSprintId);
       currentSprint.add(retrievedSprint);
