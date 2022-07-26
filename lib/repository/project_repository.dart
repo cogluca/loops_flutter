@@ -54,12 +54,15 @@ class ProjectRepository {
 
   ///Saves a new Sprint passed as argument [sprintToAdd] to the firestore storage
   Future<void> addNewSprint(Sprint sprintToAdd) async {
+
     await firestore.collection('sprint').add(sprintToAdd.toJson());
   }
 
   ///Retrieves the current sprint according to the current Project document, retrieves each task belonging to the Sprint, recreates the object [retrievedSprint] and returns it
   Future<Sprint> retrieveCurrentSprint(String currentSprintId) async {
     List<Task> tasksOfSprint = [];
+
+    print("retrieving current sprint with id : $currentSprintId");
 
     DocumentSnapshot documentSnapshot =
         await firestore.collection('sprint').doc(currentSprintId).get().onError((error, stackTrace) => throw Failure('Empty sprint data'));
@@ -105,13 +108,20 @@ class ProjectRepository {
       Sprint startASprint) async {
     String sprintId = await firestore.collection('sprint').add(startASprint.toJson()).then((value) => value.id);
 
+    print("Sprint correctly started");
+
     String projectId = Get.find<GetStorage>().read('choosenProject');
 
     await firestore.collection('projects').doc(projectId).update({
       'currentSprintId': sprintId,
     });
 
+    //print("sprint id after insertion onto Db is : $sprintId");
+
     Get.find<GetStorage>().write('currentProjectSprintId', sprintId);
+
+    String readSprint = Get.find<GetStorage>().read('currentProjectSprintId');
+    //print('Sprint id in storage is $readSprint');
 
     return sprintId;
   }

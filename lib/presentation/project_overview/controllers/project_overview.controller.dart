@@ -93,6 +93,8 @@ class ProjectOverviewController extends GetxController {
     String hasCurrentSprint = Get.find<GetStorage>().read('hasCurrentSprint');
     String currentSprintId = Get.find<GetStorage>().read('currentProjectSprintId');
 
+    print("has current sprint value is : $hasCurrentSprint");
+
     if (hasCurrentSprint != "false") {
       retrievedSprint =
           await projectRepository.retrieveCurrentSprint(currentSprintId);
@@ -122,6 +124,7 @@ class ProjectOverviewController extends GetxController {
 
     //DateTime projectWideStartDateConstraint = DateTime.parse(projectStartDateConstraint.value);
     //print("VALUE OF DATETIME IS${projectWideStartDateConstraint.toString()}");
+    getStorage.write('hasCurrentSprint', 'true');
 
     await projectRepository.startASprint(sprintStarted);
     String currentSprintId =
