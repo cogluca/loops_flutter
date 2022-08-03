@@ -86,7 +86,8 @@ class BacklogController extends GetxController {
   /// repository method relative to the task
   Future<void> saveNewlyCreatedTask() async {
     String currentSprintId = "";
-    String projectId = homeController.currentProjectId;
+    String projectId = Get.find<GetStorage>().read('choosenProject');
+    print("Current Project id in backlogcontroller is $projectId");
     int position = Get.find<GetStorage>().read('completeBacklogTasks');
 
     if (assignToSprintState.value == true) {

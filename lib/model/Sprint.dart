@@ -11,13 +11,13 @@ class Sprint {
   String _endDate;
   String _projectId;
 
-
-
   int _totalStoryPoints = 0;
 
   int _totalStoryPointsAchieved = 0;
   List<Task> _listOfTasks;
   bool _completed = false;
+
+
   Sprint(this._id, this._startDate, this._endDate, this._listOfTasks,
       this._completed, this._projectId);
 

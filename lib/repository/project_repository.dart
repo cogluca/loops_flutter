@@ -100,6 +100,8 @@ class ProjectRepository {
         .update({'completed': true});
 
     Get.find<GetStorage>().write('currentProjectSprintId', "");
+    String currentSprint = Get.find<GetStorage>().read('currentProjectSprintId');
+
   }
 
   ///Starts a Sprint by adding the Sprint passed as parameter [startASprint], updates reference to current sprint on local storage and updates the current Project currentSprint field with the sprint id

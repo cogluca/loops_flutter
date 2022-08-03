@@ -69,6 +69,16 @@ class SprintDialog extends GetView<ProjectOverviewController> {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
+              if(controller.sprintStartDate.text == "" || controller.sprintEndDate.text == ""){
+                showDialog(context: context, builder: (BuildContext context) => AlertDialog(
+                  title: Text("Oops dates weren't added"
+                  ),
+                  content: Column(children: [
+                    const Text("Happens to be that you forgot to add dates to the Sprint!"),
+                    TextButton(onPressed: ()=> Navigator.of(context).pop(), child: const Text("I understand"))
+                  ],mainAxisAlignment: MainAxisAlignment.center,),
+                ));
+              }
               controller.startSprint();
               Navigator.pop(context);
             },
