@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Loops',
       theme: ThemeData(
+        buttonColor: const Color(0xFFcc9a02),
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the

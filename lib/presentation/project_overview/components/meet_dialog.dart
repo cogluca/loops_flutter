@@ -182,8 +182,11 @@ class MeetDialog extends GetView<ProjectOverviewController> {
           padding: const EdgeInsets.all(8.0),
         ),
         Container(
-          child: TextButton(
-            child: const Text('Invite'),
+          child: TextButton(style:
+            TextButton.styleFrom(backgroundColor: const Color(0xFFf5d271)),
+            child: const Text('Invite', style: TextStyle(
+              color: Color(0xFFad7f00)
+            ),),
             onPressed: () {
               controller.sendGoogleMeetInvite();
               Navigator.of(context).pop();

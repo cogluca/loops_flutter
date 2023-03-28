@@ -58,11 +58,12 @@ class PortraitMode extends GetView<ProjectOverviewController> {
           children: [
             Obx(() {
               if (controller.currentSprint.isEmpty) {
-                return const Text('None active');
+                return const Text('None active',
+                );
               } else {
                 return Text(
                   'Current Sprint: From ${controller.currentSprint[0].startDate.toString()} To ${controller.currentSprint[0].endDate.toString()} ',
-                  style: const TextStyle(fontSize: 15),
+                  style: const TextStyle(fontSize: 15, ),
                 );
               }
             }),
@@ -72,7 +73,14 @@ class PortraitMode extends GetView<ProjectOverviewController> {
           Obx(() {
             if (controller.currentSprint.isEmpty) {
               return Card(
+                margin: const EdgeInsets.only(
+                  top: 8,
+                  bottom: 8,
+                ),
+                color: const Color(0xFFf5d271),
                   child: TextButton(
+                      style:
+                      TextButton.styleFrom(backgroundColor: const Color(0xFFf5d271)),
                 onPressed: () {
                   showModalBottomSheet(
                     isScrollControlled: true,
@@ -162,8 +170,9 @@ class PortraitMode extends GetView<ProjectOverviewController> {
                         )]);
                       });
                 },
-                child: const Text('Start a sprint'),
-              ));
+                child: const Text('Start a sprint', style: TextStyle(
+                    color: Color(0xFFad7f00),),
+    )));
             } else {
               return const SizedBox.shrink();
             }
@@ -175,8 +184,9 @@ class PortraitMode extends GetView<ProjectOverviewController> {
                 onPressed: () {
                   controller.turnSprintOff();
                 },
-                child: const Text('End Sprint'),
-              ));
+                child: const Text('End Sprint', style: TextStyle(
+                    color: Color(0xFFad7f00),),
+              )));
             } else {
               return const SizedBox.shrink();
             }
